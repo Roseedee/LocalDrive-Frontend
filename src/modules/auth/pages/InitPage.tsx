@@ -1,24 +1,17 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { api } from "../../../shared/lib/axios"
+import { register } from "../api/auth.api"
 
 export default function RegisterPage() {
     const navigate = useNavigate()
     const [deviceName, setDeviceName] = useState("")
 
     const handleSubmit = async () => {
-        try {
-            await api.post("/auth/init", {}, {
-                headers: {
-                    "X-Device-Name": deviceName
-                }
-            })
-            alert("Device registered successfully!")
-            navigate("/", { replace: true })
-        } catch (err) {
-            console.error(err)
-            alert("Failed to register device.")
-        }
+        register(deviceName).then(() => {
+            navigate('/files')
+        }).catch(() => {
+            // console.log(err)
+        })
     }
 
     return (

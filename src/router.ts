@@ -1,14 +1,14 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 
-import AppLayout from "../shared/layout/AppLayout";
-import AuthLayout from "../shared/layout/AuthLayout";
+import AppLayout from "./shared/layout/AppLayout";
+import AuthLayout from "./shared/layout/AuthLayout";
 
-import { filesRoutes } from "../modules/files/routes";
+import { filesRoutes } from "./modules/files/routes";
 
-import AuthGate from "../modules/auth/AuthGate";
-import RegisterPage from "../modules/auth/pages/RegisterPage";
-import LogoutPage from "../modules/auth/pages/LogoutPage";
+import AuthGate from "./modules/auth/AuthGate";
+import InitPage from "./modules/auth/pages/InitPage";
+import LogoutPage from "./modules/auth/pages/LogoutPage";
 
 export const router = createBrowserRouter([
     {
@@ -17,11 +17,11 @@ export const router = createBrowserRouter([
     },
     {
         element: React.createElement(AuthLayout),
-        path: "/register",
+        path: "/init",
         children: [
             {
                 index: true,
-                element: React.createElement(RegisterPage)
+                element: React.createElement(InitPage)
             }
         ]
     },

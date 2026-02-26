@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { api } from "../../../shared/lib/axios";
+import { api } from "@/shared/lib/axios";
 import { useNavigate } from "react-router-dom";
 
 export default function LogoutPage() {

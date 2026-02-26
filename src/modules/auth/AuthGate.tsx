@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
 import { useNavigate } from "react-router-dom"
-import { getCurrentUser } from "./services/auth.service"
+import { getCurrentUser } from "./api/auth.api"
 
 export default function AuthGate() {
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function checkAuth() {
@@ -20,7 +19,5 @@ export default function AuthGate() {
     checkAuth()
   }, [navigate])
 
-  if (loading) return <div>Loading...</div>
-
-  return null
+  return <div>Loading...</div>
 }
