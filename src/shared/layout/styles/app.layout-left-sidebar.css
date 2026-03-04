@@ -1,0 +1,17 @@
+.left-sidebar {
+    z-index: 999;
+    padding: var(--section-pad);
+    min-width: 300px;
+    max-width: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.left-sidebar-header {
+    padding: var(--section-pad);
+    display: flex;
+    justify-content: center;
+}

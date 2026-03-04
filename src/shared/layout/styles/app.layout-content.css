@@ -1,0 +1,13 @@
+.content {
+    /* padding: var(--section-pad); */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: var(--section-pad);
+}
+
+.page-body {
+    padding: var(--section-pad);
+    background-color: rgb(255, 255, 255);
+    min-height: calc(100vh - var(--header-height) - var(--section-pad));
+}

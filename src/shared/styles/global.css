@@ -1,5 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+:root {
+    --section-pad: 12px;
+
+    /* header */
+    --header-height: 60px;
+}
+
+body {
+    font-family: "Anuphan", "Inter", sans-serif;
+    line-height: 1.2;
 }
