@@ -1,18 +1,21 @@
-import { useEffect } from "react";
-import { api } from "@/shared/lib/axios";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { logout } from "../api/auth.api"
+import { useAuthStore } from "../store/auth.store"
 
 export default function LogoutPage() {
-  const navigate = useNavigate();
+  const clearAuth = useAuthStore(s => s.clearAuth)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    async function logout() {
-      await api.post("/auth/logout");
-      navigate("/", { replace: true });
+    async function doLogout() {
+      await logout()
+      clearAuth()
+      navigate("/init", { replace: true })
     }
 
-    logout();
-  }, [navigate]);
+    doLogout()
+  }, [])
 
-  return <div>Logging out...</div>;
+  return <div>Logging out...</div>
 }

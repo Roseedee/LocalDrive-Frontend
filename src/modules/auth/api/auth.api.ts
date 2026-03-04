@@ -19,3 +19,12 @@ export async function register(deviceName: string) {
         throw err;
     }
 }
+
+export async function logout() {
+    try {
+        await api.post('/auth/logout');
+    } catch (err) {
+        console.log('Error logging out:', err);
+        throw err;
+    }
+}

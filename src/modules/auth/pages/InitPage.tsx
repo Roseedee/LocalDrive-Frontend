@@ -2,15 +2,16 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { register } from "../api/auth.api"
 
+
 export default function RegisterPage() {
     const navigate = useNavigate()
     const [deviceName, setDeviceName] = useState("")
 
     const handleSubmit = async () => {
         register(deviceName).then(() => {
-            navigate('/files')
-        }).catch(() => {
-            // console.log(err)
+            navigate('/', { replace: true })
+        }).catch((err) => {
+            console.log('Error registering device:', err)
         })
     }
 

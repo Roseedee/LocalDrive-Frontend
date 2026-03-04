@@ -1,4 +1,3 @@
-import React from "react";
 import FilesPage from "./pages/FilesPage";
 
 export const filesRoutes = {
@@ -6,7 +5,7 @@ export const filesRoutes = {
     children: [
         {
             index: true,
-            element: React.createElement(FilesPage)
+            element: <FilesPage />
         }
     ]
 }
