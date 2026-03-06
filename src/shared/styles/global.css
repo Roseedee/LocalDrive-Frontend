@@ -9,6 +9,10 @@
 :root {
     --section-pad: 12px;
 
+    /* left sidebar */
+    --left-sidebar-width: 300px;
+    --left-sidebar-width-collapsed: 80px;
+
     /* header */
     --header-height: 60px;
 }
@@ -16,4 +20,9 @@
 body {
     font-family: "Anuphan", "Inter", sans-serif;
     line-height: 1.2;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }

@@ -1,4 +1,9 @@
+@import url('./app.layout-left-sidebar.css');
+@import url('./app.layout-header.css');
+@import url('./app.layout-content.css');
+
 .app-layout {
+    background-color: #fefefe;
     display: flex;
     flex-direction: row;
     min-height: 100vh;

@@ -1,4 +1,4 @@
-.content {
+.main-content {
     /* padding: var(--section-pad); */
     display: flex;
     flex-direction: column;
@@ -6,8 +6,9 @@
     gap: var(--section-pad);
 }
 
-.page-body {
+.content {
     padding: var(--section-pad);
     background-color: rgb(255, 255, 255);
     min-height: calc(100vh - var(--header-height) - var(--section-pad));
+    border-radius: 15px 0 0 0;
 }

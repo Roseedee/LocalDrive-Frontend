@@ -4,11 +4,12 @@ export default function FilesPage() {
   const { user_id, device_name } = useAuthStore();
 
   return (
-    <div>
+    <div className="content">
       <h1>Files</h1>
       <p>This is the Files page.</p>
       <p>User ID: {user_id}</p>
       <p>Device Name: {device_name}</p>
+      <a href="/logout">Logout</a>
     </div>
   );
 }

@@ -1,22 +1,32 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { register } from "../api/auth.api"
+import { useAuthStore } from "../store/auth.store"
 
 
 export default function RegisterPage() {
     const navigate = useNavigate()
     const [deviceName, setDeviceName] = useState("")
+    const setSession = useAuthStore(s => s.setSession)
 
     const handleSubmit = async () => {
-        register(deviceName).then(() => {
-            navigate('/', { replace: true })
-        }).catch((err) => {
-            console.log('Error registering device:', err)
-        })
+        try {
+            if (!deviceName) {
+                alert("Please enter a device name")
+                return
+            }   
+            const res = await register(deviceName)
+            console.log(res)
+            setSession(res)
+            navigate("/")
+        } catch (error) {
+            console.error('Error registering device:', error)
+        }
     }
 
     return (
         <div>
+            <a href="/">Back to Home</a>
             Register Page
             <form action="" onSubmit={(e) => {
                 e.preventDefault();
