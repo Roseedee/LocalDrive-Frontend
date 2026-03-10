@@ -1,0 +1,41 @@
+.storage-info {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: var(--section-pad);
+    border-radius: 5px;
+    background-color: var(--bg-secondary);
+    background-color: #F4F4F4;
+}
+
+.storage-info .storage-info-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 3px;
+}
+
+.storage-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.storage-info-bar {
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #D4D4D4;
+    position: relative;
+    padding: 1px;
+}
+
+.storage-info-bar .storage-info-used {
+    height: 100%;
+    border-radius: 5px;
+    background-color: #5C5C5C;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
