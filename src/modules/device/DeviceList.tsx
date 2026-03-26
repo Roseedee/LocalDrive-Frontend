@@ -4,7 +4,7 @@ import Device from './components/Device';
 import arrowIcon from '@/assets/icons/arrow.png';
 
 export default function DeviceList() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   
   return (
     <ul className={`left-sidebar-section`}>

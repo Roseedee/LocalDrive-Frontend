@@ -7,7 +7,7 @@ export default function Pin() {
             <a href="/file/123">
                 <img src={folderIcon} alt="Computer" />
                 <div className="column gap-3">
-                    <b>งานกล้องวงจรปิด</b>
+                    <p>งานกล้องวงจรปิด</p>
                     {/* <span className='tag'>f4s5s8w6...</span> */}
                 </div>
             </a>

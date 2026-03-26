@@ -1,0 +1,27 @@
+.toolbar-action-content {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+.toolbar-action-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 8px;
+    background-color: var(--color-primary);
+    border-radius: var(--btn-radius);
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+.toolbar-action-btn img {
+    width: 16px;
+}
+
+.toolbar-action-btn:hover {
+    background-color: var(--color-primary-hover);
+}

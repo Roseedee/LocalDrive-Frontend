@@ -10,6 +10,7 @@
 
 :root {
     --color-primary: #FDE9FF;
+    --color-primary-hover: #FBCEFF;
     --section-pad: 12px;
     --btn-radius: 5px;
 
@@ -18,12 +19,16 @@
     --left-sidebar-width-collapsed: 80px;
 
     /* header */
-    --header-height: 60px;
+    --header-height: 50px;
 }
 
 a {
     text-decoration: none;
     color: inherit;
+}
+
+.hidden {
+    display: none;
 }
 
 .in-line-text {

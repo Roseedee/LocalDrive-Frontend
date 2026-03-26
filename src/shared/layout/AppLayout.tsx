@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import DeviceList from '@/modules/device/DeviceList';
 import PinList from '@/modules/pins/PinList';
 import StorageInfo from '@/modules/storage/components/StorageInfo';
+import ToolbarActions from '@/modules/files/components/ToolbarActions';
 
 import appIcon from '@/assets/icons/app.png';
 import arrowIcon from '@/assets/icons/arrow.png';
@@ -14,6 +15,7 @@ import shareIcon from '@/assets/icons/share.png';
 import favoriteIcon from '@/assets/icons/favorite.png';
 import share1Icon from '@/assets/icons/share_1.png';
 import trashIcon from '@/assets/icons/bin.png';
+import searchIcon from '@/assets/icons/search.png';
 
 export default function AppLayout() {
 
@@ -36,22 +38,22 @@ export default function AppLayout() {
             <img src={arrowIcon} alt="Arrow" />
           </div>
         </div>
-        <button className="upload-file-btn">
+        <button className="upload-file-btn" onClick={() => document.getElementById('upload-file')?.click()}>
           <img src={uploadIcon} alt="Upload" />
           <b>อัพโหลดไฟล์</b>
+          <input type="file" className='hidden' id='upload-file' />
         </button>
         <div className="left-sidebar-list">
-          <DeviceList />
           <PinList />
           <ul className={`left-sidebar-section`}>
             <div className="section-title">
               <span>เครื่องนี้</span>
             </div>
-            <li className="section-item">
+            <li className="section-item active">
               <a href="/file">
                 <img src={computerIcon} alt="Computer" />
                 <div className="row between">
-                  <b>ไฟล์เครื่องนี้</b>
+                  <p>ไฟล์เครื่องนี้</p>
                   {/* <span className='tag'></span> */}
                 </div>
               </a>
@@ -60,7 +62,7 @@ export default function AppLayout() {
               <a href="/file">
                 <img src={shareIcon} alt="Computer" />
                 <div className="row between">
-                  <b>ที่แชร์กับเครื่องนี้</b>
+                  <p>ที่แชร์กับเครื่องนี้</p>
                   {/* <span className='tag'></span> */}
                 </div>
               </a>
@@ -69,7 +71,7 @@ export default function AppLayout() {
               <a href="/file">
                 <img src={favoriteIcon} alt="Computer" />
                 <div className="row between">
-                  <b>รายการโปรด</b>
+                  <p>รายการโปรด</p>
                   <span className='tag'>15</span>
                 </div>
               </a>
@@ -78,7 +80,7 @@ export default function AppLayout() {
               <a href="/file">
                 <img src={share1Icon} alt="Computer" />
                 <div className="row between">
-                  <b>รายการไฟล์ที่แชร์</b>
+                  <p>รายการไฟล์ที่แชร์</p>
                   <span className='tag'>13</span>
                 </div>
               </a>
@@ -87,12 +89,13 @@ export default function AppLayout() {
               <a href="/file">
                 <img src={trashIcon} alt="Computer" />
                 <div className="row between">
-                  <b>ถังขยะ</b>
+                  <p>ถังขยะ</p>
                   <span className='tag'>55</span>
                 </div>
               </a>
             </li>
             <StorageInfo />
+            <DeviceList />
           </ul>
         </div>
         <footer>
@@ -106,7 +109,24 @@ export default function AppLayout() {
 
       <div className="main-content">
         <div className="header">
-          asdf
+          <div className="header-content">
+            <div className="file-path">
+              <a href='/files'>เครื่องนี้</a>
+              /
+              <a href='/files/folder1'>โฟลเดอร์ 1</a>
+              /
+              <a href='/files/folder1/folder2'>โฟลเดอร์ 2</a>
+            </div>
+            <div className="search-content">
+              <div className="input-search-container">
+                <input type="text" placeholder='ค้นหาไฟล์หรือโฟลเดอร์' />
+                <button className="search-btn">
+                  <img src={searchIcon} alt="Search" />
+                </button>
+              </div>
+            </div>
+            <ToolbarActions />
+          </div>
         </div>
         <Outlet />
       </div>

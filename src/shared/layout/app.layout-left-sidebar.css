@@ -14,7 +14,7 @@
 
 .left-sidebar-header {
     position: relative;
-    padding: var(--section-pad);
+    padding: calc(var(--section-pad)/2);
     display: flex;
     justify-content: center;
 }
@@ -82,12 +82,14 @@
     gap: 12px;
     overflow-x: hidden;
     overflow-y: auto;
+    /* scrollbar-gutter: stable; */
 }
 
 .left-sidebar-section {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    padding-right: 5px;
 }
 
 .left-sidebar-section .section-title {
@@ -138,6 +140,10 @@
     background-color: #f0f0f0;
 }
 
+.left-sidebar-section .section-item.active a {
+    background-color: var(--color-primary);
+    font-weight: 600;
+}
 
 .left-sidebar footer {
     text-align: center;

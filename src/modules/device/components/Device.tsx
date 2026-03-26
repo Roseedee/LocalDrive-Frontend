@@ -6,9 +6,12 @@ export default function Device() {
         <li className="section-item">
             <a href="/device/my-computer">
                 <img src={computerIcon} alt="Computer" />
-                <div className="column gap-3">
-                    <b>Laptop MSI</b>
-                    <span className='tag'>f4s5s8w6...</span>
+                <div className="row between center">
+                    <div className="column gap-3">
+                        <p>Laptop MSI</p>
+                        <span className='tag'>f4s5s8w6...</span>
+                    </div>
+                    <span className='tag'>ออนไลน์</span>
                 </div>
             </a>
         </li>
