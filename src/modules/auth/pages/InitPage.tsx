@@ -17,6 +17,7 @@ export default function RegisterPage() {
             }   
             const res = await register(deviceName)
             console.log(res)
+            localStorage.setItem("accessToken", res.accessToken)
             setSession(res)
             navigate("/")
         } catch (error) {
