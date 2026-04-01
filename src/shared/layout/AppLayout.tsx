@@ -115,7 +115,7 @@ export default function AppLayout() {
               /
               <a href='/files/folder1'>โฟลเดอร์ 1</a>
               /
-              <a href='/files/folder1/folder2'>โฟลเดอร์ 2</a>
+              <a href='/logout'>โฟลเดอร์ 2</a>
             </div>
             <div className="search-content">
               <div className="input-search-container">

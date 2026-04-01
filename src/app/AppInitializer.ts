@@ -7,6 +7,14 @@ export function AppInitializer({ children } : { children: React.ReactNode }) {
   const clearAuth = useAuthStore(s => s.clearAuth)
 
   useEffect(() => {
+
+    const token = localStorage.getItem("accessToken")
+    if (!token) {
+      console.log("No token found, clearing auth state")
+      clearAuth()
+      return
+    }
+
     async function init() {
       getCurrentUser().then(user => {
         if (user) {
