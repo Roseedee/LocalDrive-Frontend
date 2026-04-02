@@ -19,7 +19,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
     setSession: (data) => set({
         user_id: data.user.id,
-        device_name: data.device_name,
+        device_name: data.device.name,
         loading: false,
         isSessionExpired: false,
     }),

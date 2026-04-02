@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import { sessionStorage } from "./sessionStorage";
-
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 
 export const api = axios.create({
@@ -57,7 +55,7 @@ api.interceptors.response.use(
         const data = res.data;
 
         localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("device_uuid", data.device_uuid);
+        localStorage.setItem("device_uuid", data.device.uuid);
 
         original.headers.Authorization = `Bearer ${data.accessToken}`;
 
@@ -88,7 +86,6 @@ export const logout = async () => {
     await api.post("/auth/logout");
   } catch {}
 
-  sessionStorage.clear();
   useAuthStore.getState().expireSession();
   localStorage.removeItem("accessToken");
   window.location.replace("/init");

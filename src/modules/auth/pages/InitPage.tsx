@@ -3,11 +3,6 @@ import { useNavigate } from "react-router-dom"
 import { register } from "../api/auth.api"
 import { useAuthStore } from "../store/auth.store"
 
-import { sessionStorage } from "@/shared/lib/sessionStorage"
-
-import type { SessionModel } from "../model/session.model"
-
-
 export default function RegisterPage() {
     const navigate = useNavigate()
     const [deviceName, setDeviceName] = useState("")
@@ -21,12 +16,10 @@ export default function RegisterPage() {
             }   
             const res = await register(deviceName)
             // console.log(res)
+
             localStorage.setItem("accessToken", res.accessToken)
-            localStorage.setItem("device_uuid", res.device_uuid)
-            sessionStorage.set<SessionModel>("session", {
-                user_id: res.user.id,
-                device_name: res.device_name
-            })
+            localStorage.setItem("device_uuid", res.device.uuid)
+
             setSession(res)
             navigate("/")
         } catch (error) {

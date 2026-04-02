@@ -17,6 +17,7 @@ export function AppInitializer({ children } : { children: React.ReactNode }) {
 
     async function init() {
       getCurrentUser().then(user => {
+        // console.log("Current user:", user)
         if (user) {
           setSession(user)
         } else {
