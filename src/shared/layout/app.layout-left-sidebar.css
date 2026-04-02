@@ -1,6 +1,6 @@
 .left-sidebar {
     box-sizing: border-box;
-    z-index: 999;
+    z-index: 99;
     padding: var(--section-pad);
     /* width: 15%; */
     width: var(--left-sidebar-width);
