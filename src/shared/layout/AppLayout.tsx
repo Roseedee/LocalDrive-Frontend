@@ -5,6 +5,7 @@ import DeviceList from '@/modules/device/DeviceList';
 import PinList from '@/modules/pins/PinList';
 import StorageInfo from '@/modules/storage/components/StorageInfo';
 import ToolbarActions from '@/modules/files/components/ToolbarActions';
+import ActionContent from '@/modules/files/components/ActionContent';
 
 import appIcon from '@/assets/icons/app.png';
 import arrowIcon from '@/assets/icons/arrow.png';
@@ -127,6 +128,7 @@ export default function AppLayout() {
             </div>
             <ToolbarActions />
           </div>
+          <ActionContent />
         </div>
         <Outlet />
       </div>

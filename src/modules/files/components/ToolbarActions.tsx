@@ -16,13 +16,13 @@ export default function ToolbarActions() {
     
     return (
         <div className="toolbar-action-content">
-            <button className="toolbar-action-btn" onClick={() => setViewActive(!viewActive)}>
+            <button className="toolbar action-btn" onClick={() => setViewActive(!viewActive)}>
                 <img src={viewActive ? viewFillIcon : viewIcon} alt="View" />
             </button>
-            <button className="toolbar-action-btn" onClick={() => setSelectActive(!selectActive)}>
+            <button className="toolbar action-btn" onClick={() => setSelectActive(!selectActive)}>
                 <img src={selectActive ? selectFillIcon : selectIcon} alt="Select" />
             </button>
-            <button className="toolbar-action-btn" onClick={() => setNoticeActive(!noticeActive)}>
+            <button className="toolbar action-btn" onClick={() => setNoticeActive(!noticeActive)}>
                 <img src={noticeActive ? noticeFillIcon : noticeIcon} alt="Notice" />
             </button>
         </div>

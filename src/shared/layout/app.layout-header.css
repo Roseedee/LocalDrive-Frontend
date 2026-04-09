@@ -1,7 +1,9 @@
 .header {
     padding: var(--section-pad);
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    gap: var(--section-pad);
 }
 
 .header-content {

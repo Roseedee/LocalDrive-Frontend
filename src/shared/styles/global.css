@@ -16,10 +16,14 @@
 
     /* left sidebar */
     --left-sidebar-width: 300px;
-    --left-sidebar-width-collapsed: 80px;
+    --left-sidebar-width-collapsed: 100px;
 
     /* header */
     --header-height: 50px;
+
+    /* action content */
+    --action-padding: 8px;
+    --icon-size: 16px;
 }
 
 a {
