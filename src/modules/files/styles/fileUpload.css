@@ -1,0 +1,110 @@
+.file-upload-container {
+    flex-shrink: 0;
+    width: var(--right-sidebar-width);
+    min-height: calc(100vh - 175px);
+    /* background-color: #fff; */
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.file-upload-list {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+}
+
+.file-upload-item {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    /* background-color: #d3d3d3; */
+}
+
+.file-upload-item .item-preview {
+    flex-shrink: 0;
+    width: 64px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    /* border: 1px solid #ddd; */
+}
+
+.file-upload-item .item-info {
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-upload-item .item-info .progress-container {
+    /* flex-grow: 1; */
+    background-color: rgb(201, 201, 201);
+    border-radius: 100px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: end;
+}
+
+.file-upload-item .item-info .progress-container .progress-bar {
+    width: 50%;
+    height: 8px;
+    background-color: var(--color-primary-hover);
+    border-radius: 5px;
+    /* animation: load 3s linear forwards; */
+}
+
+.file-upload-item .item-btn-cancel {
+    flex-shrink: 0;
+    width: 0px;
+    height: 100%;
+    background-color: #d83333;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    border: none;
+    /* border-radius: 5px 0 0 5px; */
+    
+    &:hover {
+        background-color: #d81313;
+    }
+
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.file-upload-item:hover .item-btn-cancel {
+    padding: 5px 8px;
+    width: 24px;
+}
+
+.file-upload-btn {
+    padding: 5px 10px;
+    background-color: #adadad;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+    border-radius: 5px;
+    
+    &:hover {
+        background-color: #9c9c9c;
+    }
+}

@@ -21,6 +21,9 @@
     /* header */
     --header-height: 50px;
 
+    /* right sidebar */
+    --right-sidebar-width: 320px;
+
     /* action content */
     --action-padding: 8px;
     --icon-size: 16px;
@@ -43,6 +46,10 @@ a {
 .tag {
     font-size: 12px;
     color: #AEAEAE;
+}
+
+.b {
+    font-weight: bold;
 }
 
 .row {
@@ -77,4 +84,3 @@ a {
 .gap-10 {
     gap: 10px;
 }
-

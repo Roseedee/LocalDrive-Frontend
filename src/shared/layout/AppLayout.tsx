@@ -1,5 +1,7 @@
 import './app.layout.css';
 
+import { useFileStore } from '@/modules/files/store/file.store';
+
 import { Outlet } from 'react-router-dom';
 import DeviceList from '@/modules/device/DeviceList';
 import PinList from '@/modules/pins/PinList';
@@ -19,6 +21,22 @@ import trashIcon from '@/assets/icons/bin.png';
 import searchIcon from '@/assets/icons/search.png';
 
 export default function AppLayout() {
+  const { setFilesUpload } = useFileStore();
+
+  const handleFileUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files ? Array.from(e.target.files) : [];
+    if (files) {
+      // console.log("Selected files:", files);
+      const fileUploadData = files.map((file) => ({
+        id: `${Date.now()}-${file.name}`,
+        path: URL.createObjectURL(file),
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      }));
+      setFilesUpload(fileUploadData);
+    }
+  };
 
   const toggleSidebar = () => {
     const sidebar = document.querySelector('.left-sidebar');
@@ -42,7 +60,7 @@ export default function AppLayout() {
         <button className="upload-file-btn" onClick={() => document.getElementById('upload-file')?.click()}>
           <img src={uploadIcon} alt="Upload" />
           <b>อัพโหลดไฟล์</b>
-          <input type="file" className='hidden' id='upload-file' />
+          <input type="file" className='hidden' id='upload-file' multiple onChange={handleFileUploadChange} />
         </button>
         <div className="left-sidebar-list">
           <PinList />

@@ -1,0 +1,226 @@
+.file-info-container {
+    flex-shrink: 0;
+    width: var(--right-sidebar-width);
+    min-height: calc(100vh - 175px);
+    /* background-color: #fff; */
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.file-info-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.file-info-header h5 {
+    max-width: max-content;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.file-info-preview {
+    position: relative;
+    width: 100%;
+    min-height: 150px;
+    max-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    /* margin-top: 15px; */
+
+}
+
+/* .file-info-preview .file-info-preview-hover {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.671);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.file-info-preview:hover .file-info-preview-hover {
+    opacity: 1;
+} */
+
+.file-info-preview p.file-type {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background-color: #FDE9FF;
+    padding: 4px 5px;
+    color: #000;
+    font-size: 0.6rem;
+    border-radius: 3px;
+
+}
+
+.file-info-preview .image-icon {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.file-info-meta-data {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.meta-data-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* .meta-data-item.list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.meta-data-item-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.meta-data-item-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+} */
+
+/* .file-info-selector {
+    font-size: 0.7rem;
+    padding: 4px 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.file-info-selector:focus {
+    outline: none;
+}
+
+.file-info-btn-save {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+    background-color: #649b4a;
+    color: white;
+    cursor: pointer;
+}
+
+.file-info-btn-add-permission {
+    font-size: 0.6rem;
+    padding: 3px 5px;
+    border-radius: 3px;
+    border: none;
+    background-color: rgb(141, 141, 236);
+    opacity: 0.8;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.file-info-btn-del-permission {
+    font-size: 0.7rem;
+    padding: 2px 3px 4px 3px;
+    border-radius: 3px;
+    border: none;
+    background-color: rgb(243, 89, 62);
+    opacity: 0.8;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.device-permission-item {
+    width: 100%;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: 5px;
+}
+
+.file-info-loading {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.file-info-loading::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 3px solid;
+    border-color: #9dc776 transparent;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+} */
+
+.file-info-btn {
+    padding: 5px 10px;
+    background-color: #adadad;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+    border-radius: 5px;
+    
+    &:hover {
+        background-color: #9c9c9c;
+    }
+}

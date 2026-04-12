@@ -1,12 +1,21 @@
 import { create } from 'zustand';
 
+type SessionData = {
+  user: {
+    id: string;
+  };
+  device: {
+    name: string;
+  };
+};
+
 interface AuthState {
     user_id: string | null;
     device_name: string | null;
     loading: boolean;
     isSessionExpired: boolean;
 
-    setSession: (data: any) => void;
+    setSession: (data: SessionData) => void;
     clearAuth: () => void;
     expireSession: () => void;
 }
@@ -28,6 +37,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         user_id: null,
         device_name: null,
         loading: false,
+        isSessionExpired: false
     }),
 
     expireSession: () => set({
