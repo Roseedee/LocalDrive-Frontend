@@ -30,7 +30,7 @@
 .file-upload-item .item-preview {
     flex-shrink: 0;
     width: 64px;
-    height: 50px;
+    height: 45px;
     object-fit: cover;
     border-radius: 5px;
     display: flex;
@@ -46,6 +46,17 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
+    padding: 1px 0;
+    /* white-space: nowrap;
+    text-overflow: ellipsis; */
+}
+
+.file-upload-item .item-info .file-name {
+    /* font-size: 14px;
+    font-weight: 500;
+    color: #333; */
+    user-select: text;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -62,10 +73,35 @@
 
 .file-upload-item .item-info .progress-container .progress-bar {
     width: 50%;
-    height: 8px;
-    background-color: var(--color-primary-hover);
+    height: 5px;
+    background-color: #313131;
     border-radius: 5px;
     /* animation: load 3s linear forwards; */
+}
+
+.file-upload-item .item-info small.tag {
+    
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.point-status {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #2ecc71;
+}
+
+.point-status.pending {
+    background-color: #a1a1a1;
+}
+
+.point-status.error {
+    background-color: #ff1900;
 }
 
 .file-upload-item .item-btn-cancel {

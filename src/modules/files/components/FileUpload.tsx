@@ -1,4 +1,5 @@
 import '../styles/fileUpload.css'
+import { uploadFile } from '../api/file.api';
 
 import { useFileStore } from '../store/file.store';
 
@@ -12,6 +13,12 @@ export default function FileInfo() {
         removeFileUpload(id);
     };
 
+    const handleTestUpload = async () => {
+        console.log('Starting test upload...');
+        const res = await uploadFile();
+        console.log('Upload response:', res);
+    }
+
     return (
         <div className="file-upload-container">
             <h4>รายการอัพโหลด{`(${filesUpload.length})`}</h4>
@@ -21,27 +28,26 @@ export default function FileInfo() {
                         <img className='item-preview' src={file.path} />
                         <div className="item-info">
                             <div className='column'>
-                                <h5>{file.name}</h5>
+                                <h5 className='file-name'>{file.name}</h5>
                                 <p className='tag'>{file.size} bytes</p>
                             </div>
-                            {/* <div className="progress-container">
-                                <div className="progress-bar"></div>
-                            </div> */}
+                            {
+                                file.status === 'uploading' ? (
+                                    <div className="progress-container">
+                                        <div className="progress-bar" style={{ width: `${file.progress}%` }}></div>
+                                    </div>
+                                ) : (
+                                    <small className='tag'><div className={`point-status ${file.status}`}></div>{file.status}</small>
+                                )
+                            }
                         </div>
                         <div className="item-btn-cancel" onClick={() => handleCancelUpload(file.id)}>
                             <img src={cancelIcon} alt="Cancel" />
                         </div>
                     </div>
                 ))}
-                {/* <div className="file-upload-item">
-                    <img className='item-preview' src={imgTest1} />
-                    <div className="item-info">
-                        <h5>test.jpg</h5>
-                        <p className='tag'>ขนาดไฟล์: 204800 bytes</p>
-                    </div>
-                    <div className="item-btn-cancel"><img src={cancelIcon} alt="Cancel" /></div>
-                </div> */}
             </div>
+            <button className="file-upload-btn" onClick={() => handleTestUpload()}>ทดสอบอัพโหลด</button>
             <button className="file-upload-btn">ปิด</button>
         </div>
     )

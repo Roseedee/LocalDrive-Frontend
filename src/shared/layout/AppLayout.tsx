@@ -19,11 +19,18 @@ import favoriteIcon from '@/assets/icons/favorite.png';
 import share1Icon from '@/assets/icons/share_1.png';
 import trashIcon from '@/assets/icons/bin.png';
 import searchIcon from '@/assets/icons/search.png';
+import type { uploadState } from '@/modules/files/models/itemUpload.model';
 
 export default function AppLayout() {
-  const { setFilesUpload } = useFileStore();
+  const { setFilesUpload, addManyFileUpload, filesUpload } = useFileStore();
 
   const handleFileUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const statuses: uploadState[] = ["pending", "uploading", "completed", "error"];
+    function getRandomStatus(): uploadState {
+      const index = Math.floor(Math.random() * statuses.length);
+      return statuses[index];
+    }
+
     const files = e.target.files ? Array.from(e.target.files) : [];
     if (files) {
       // console.log("Selected files:", files);
@@ -33,8 +40,14 @@ export default function AppLayout() {
         name: file.name,
         size: file.size,
         type: file.type,
+        progress: 0,
+        status: getRandomStatus(),
       }));
-      setFilesUpload(fileUploadData);
+      if(filesUpload.length > 0) {
+        addManyFileUpload(fileUploadData);
+      } else {
+        setFilesUpload(fileUploadData);
+      }
     }
   };
 
@@ -63,7 +76,7 @@ export default function AppLayout() {
           <input type="file" className='hidden' id='upload-file' multiple onChange={handleFileUploadChange} />
         </button>
         <div className="left-sidebar-list">
-          <PinList />
+          {/* <PinList /> */}
           <ul className={`left-sidebar-section`}>
             <div className="section-title">
               <span>เครื่องนี้</span>
