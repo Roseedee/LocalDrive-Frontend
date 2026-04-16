@@ -1,5 +1,5 @@
 import '../styles/fileUpload.css'
-import { uploadFile } from '../api/file.api';
+import { uploadFileByID } from '../api/file.api';
 
 import { useFileStore } from '../store/file.store';
 
@@ -13,11 +13,23 @@ export default function FileInfo() {
         removeFileUpload(id);
     };
 
-    const handleTestUpload = async () => {
-        console.log('Starting test upload...');
-        const res = await uploadFile();
-        console.log('Upload response:', res);
+    const startUpload = async () => {
+
+        console.log("Start Upload")
+        const { filesUpload } = useFileStore.getState();
+
+        for(const file of filesUpload) {
+            if(file.status === "pending") {
+                await uploadFileByID(file.id)
+            }
+        }
     }
+
+    // const handleTestUpload = async () => {
+    //     console.log('Starting test upload...');
+    //     const res = await uploadFile();
+    //     console.log('Upload response:', res);
+    // }
 
     return (
         <div className="file-upload-container">
@@ -47,7 +59,7 @@ export default function FileInfo() {
                     </div>
                 ))}
             </div>
-            <button className="file-upload-btn" onClick={() => handleTestUpload()}>ทดสอบอัพโหลด</button>
+            <button className="file-upload-btn" onClick={() => startUpload()}>ทดสอบอัพโหลด</button>
             <button className="file-upload-btn">ปิด</button>
         </div>
     )

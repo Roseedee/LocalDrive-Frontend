@@ -4,7 +4,7 @@ import { useFileStore } from '@/modules/files/store/file.store';
 
 import { Outlet } from 'react-router-dom';
 import DeviceList from '@/modules/device/DeviceList';
-import PinList from '@/modules/pins/PinList';
+// import PinList from '@/modules/pins/PinList';
 import StorageInfo from '@/modules/storage/components/StorageInfo';
 import ToolbarActions from '@/modules/files/components/ToolbarActions';
 import ActionContent from '@/modules/files/components/ActionContent';
@@ -22,32 +22,22 @@ import searchIcon from '@/assets/icons/search.png';
 import type { uploadState } from '@/modules/files/models/itemUpload.model';
 
 export default function AppLayout() {
-  const { setFilesUpload, addManyFileUpload, filesUpload } = useFileStore();
+  const { addManyFileUpload } = useFileStore();
 
   const handleFileUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const statuses: uploadState[] = ["pending", "uploading", "completed", "error"];
-    function getRandomStatus(): uploadState {
-      const index = Math.floor(Math.random() * statuses.length);
-      return statuses[index];
-    }
-
     const files = e.target.files ? Array.from(e.target.files) : [];
     if (files) {
-      // console.log("Selected files:", files);
       const fileUploadData = files.map((file) => ({
         id: `${Date.now()}-${file.name}`,
+        file: file,
         path: URL.createObjectURL(file),
         name: file.name,
         size: file.size,
         type: file.type,
         progress: 0,
-        status: getRandomStatus(),
+        status: "pending" as uploadState,
       }));
-      if(filesUpload.length > 0) {
-        addManyFileUpload(fileUploadData);
-      } else {
-        setFilesUpload(fileUploadData);
-      }
+      addManyFileUpload(fileUploadData);
     }
   };
 

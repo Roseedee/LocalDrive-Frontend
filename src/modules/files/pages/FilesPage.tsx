@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { useFileStore } from "../store/file.store";
 
 import File from "../components/File";
