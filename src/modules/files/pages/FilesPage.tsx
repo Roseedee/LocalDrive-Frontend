@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 
+import "../styles/filePage.css"
+
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { useFileStore } from "../store/file.store";
 
 import File from "../components/File";
-import FileInfo from "../components/FileInfo";
-import FileUpload from "../components/FileUpload";
+import FileSidebar from "../components/FileSidebar";
 
 import type { ItemProps } from "../models/file.model";
+
+// import arrowIcon from "@/assets/icons/arrow.png"
 
 import imgTest1 from '@/assets/test1.jpg';
 import imgTest2 from '@/assets/test2.jpg';
@@ -17,6 +20,17 @@ export default function FilesPage() {
   const { filesUpload, showFileInfo } = useFileStore();
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
+
+  const [activeTab, setActiveTab] = useState<"info" | "upload">("info");
+
+  const hasUpload = filesUpload.length > 0;
+
+  // modes
+  const isForceInfo = showFileInfo && !hasUpload;
+  const isTabMode = showFileInfo && hasUpload;
+  const isUploadOnly = !showFileInfo && hasUpload;
+
+  const [isShow, setIsShow] = useState<boolean>(true)
 
   useEffect(() => {
     // Simulate an API call to fetch file list
@@ -96,14 +110,52 @@ export default function FilesPage() {
         {itemList?.map((file, index) => (
           <File key={index} item={file} />
         ))}
+        {itemList?.map((file, index) => (
+          <File key={index} item={file} />
+        ))}
+        {itemList?.map((file, index) => (
+          <File key={index} item={file} />
+        ))}
+        {itemList?.map((file, index) => (
+          <File key={index} item={file} />
+        ))}
+        {itemList?.map((file, index) => (
+          <File key={index} item={file} />
+        ))}
+        {itemList?.map((file, index) => (
+          <File key={index} item={file} />
+        ))}
       </div>
-      {filesUpload.length > 0 ? (
-        <FileUpload />
-      ) : (
-        showFileInfo && (
-          <FileInfo />
+      {/* <div className="file-container group-by">
+        <div className="file-group">
+          <div className="file-group-header">
+            <h4>Folder</h4>
+            <div className="file-group-grid"></div>
+          </div>
+          <div className="file-group-list">
+            {itemList?.map((file, index) => (
+              <File key={index} item={file} />
+            ))}
+          </div>
+        </div>
+        <div className={`file-group ${isShow ? '' : 'hide'}`}>
+          <div className="file-group-header" onClick={() => setIsShow(!isShow)}>
+            <img src={arrowIcon} alt="" />
+            <h4>File</h4>
+            <div className="file-group-grid"></div>
+          </div>
+          <div className="file-group-list">
+            {itemList?.map((file, index) => (
+              <File key={index} item={file} />
+            ))}
+          </div>
+        </div>
+      </div> */}
+      {
+        (showFileInfo || hasUpload) && (
+          <FileSidebar/>
         )
-      )}
+      }
     </div>
   );
 }

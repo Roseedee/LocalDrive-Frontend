@@ -1,4 +1,5 @@
 import '../styles/fileUpload.css'
+
 import { uploadFileByID } from '../api/file.api';
 
 import { useFileStore } from '../store/file.store';
@@ -6,8 +7,8 @@ import { useFileStore } from '../store/file.store';
 import cancelIcon from '@/assets/icons/close.png';
 
 
-export default function FileInfo() {
-    const { filesUpload, removeFileUpload } = useFileStore();
+export default function FileUpload() {
+    const { filesUpload, setFilesUpload, removeFileUpload } = useFileStore();
 
     const handleCancelUpload = (id: string) => {
         removeFileUpload(id);
@@ -32,8 +33,11 @@ export default function FileInfo() {
     // }
 
     return (
-        <div className="file-upload-container">
-            <h4>รายการอัพโหลด{`(${filesUpload.length})`}</h4>
+        <>
+            <div className="row center between">
+                <h4>รายการอัพโหลด{`(${filesUpload.filter(f => f.status==='pending').length})`}</h4>
+                <span className='file-upload-text-btn-clear' onClick={() => setFilesUpload([])}>ล้าง</span>
+            </div>
             <div className="file-upload-list">
                 {filesUpload.map((file) => (
                     <div key={file.id} className="file-upload-item">
@@ -61,6 +65,6 @@ export default function FileInfo() {
             </div>
             <button className="file-upload-btn" onClick={() => startUpload()}>ทดสอบอัพโหลด</button>
             <button className="file-upload-btn">ปิด</button>
-        </div>
+        </>
     )
 }
