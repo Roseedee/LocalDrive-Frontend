@@ -1,8 +1,6 @@
-import { useState } from 'react';
-
 import '../styles/toolbarActions.css'
 
-import { useFileStore } from '../store/file.store';
+import { useToolsStore } from '../store/tools.store';
 
 import viewIcon from '@/assets/icons/menu/dashboard.png';
 import selectIcon from '@/assets/icons/menu/check.png';
@@ -12,22 +10,22 @@ import selectFillIcon from '@/assets/icons/menu/check-fill.png';
 import noticeFillIcon from '@/assets/icons/menu/notice-fill.png';
 
 export default function ToolbarActions() {
-    const { setShowFileInfo } = useFileStore();
+    const { 
+        isGridView, setIsGridView,
+        hasMultipleFilesSelected, setHasMultipleFilesSelected,
+        showFileInfo, setShowFileInfo,
+     } = useToolsStore();
 
-    const [viewActive, setViewActive] = useState(false);
-    const [selectActive, setSelectActive] = useState(false);
-    const [noticeActive, setNoticeActive] = useState(false);
-    
     return (
         <div className="toolbar-action-content">
-            <button className="toolbar action-btn" onClick={() => setViewActive(!viewActive)}>
-                <img src={viewActive ? viewFillIcon : viewIcon} alt="View" />
+            <button className="toolbar action-btn" onClick={() => setIsGridView(!isGridView)}>
+                <img src={isGridView ? viewFillIcon : viewIcon} alt="View" />
             </button>
-            <button className="toolbar action-btn" onClick={() => setSelectActive(!selectActive)}>
-                <img src={selectActive ? selectFillIcon : selectIcon} alt="Select" />
+            <button className="toolbar action-btn" onClick={() => setHasMultipleFilesSelected(!hasMultipleFilesSelected)}>
+                <img src={hasMultipleFilesSelected ? selectFillIcon : selectIcon} alt="Select" />
             </button>
-            <button className="toolbar action-btn" onClick={() => { setShowFileInfo(!noticeActive); setNoticeActive(!noticeActive); }}>
-                <img src={noticeActive ? noticeFillIcon : noticeIcon} alt="Notice" />
+            <button className="toolbar action-btn" onClick={() => setShowFileInfo(!showFileInfo)}>
+                <img src={showFileInfo ? noticeFillIcon : noticeIcon} alt="Notice" />
             </button>
         </div>
     );

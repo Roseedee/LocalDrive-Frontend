@@ -39,6 +39,7 @@ export default function AppLayout() {
       }));
       addManyFileUpload(fileUploadData);
     }
+    e.target.value = '';
   };
 
   const toggleSidebar = () => {

@@ -1,8 +1,13 @@
 import "../styles/fileInfo.css"
 
+// import { useFileStore } from "../store/file.store";
+import { useToolsStore } from "../store/tools.store";
+
 import imgTest1 from '@/assets/test1.jpg';
 
 export default function FileInfo() {
+    // const {} = useFileStore();
+    const { setShowFileInfo } = useToolsStore();
     return (
         <>
             <div className="file-info-header">
@@ -35,7 +40,7 @@ export default function FileInfo() {
                     <p>1024 KB</p>
                 </div>
             </div>
-            <button className="file-info-btn">ปิด</button>
+            <button className="file-info-btn" onClick={() => setShowFileInfo(false)}>ปิด</button>
         </>
     )
 }

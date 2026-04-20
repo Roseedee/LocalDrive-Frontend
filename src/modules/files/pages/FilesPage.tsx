@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 
 import "../styles/filePage.css"
 
-import { useAuthStore } from "@/modules/auth/store/auth.store";
+// import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { useFileStore } from "../store/file.store";
+import { useToolsStore } from "../store/tools.store";
 
 import File from "../components/File";
 import FileSidebar from "../components/FileSidebar";
@@ -17,20 +18,10 @@ import imgTest2 from '@/assets/test2.jpg';
 import imgTest3 from '@/assets/test3.jpg';
 
 export default function FilesPage() {
-  const { filesUpload, showFileInfo } = useFileStore();
+  const { filesUpload } = useFileStore();
+  const { showFileInfo } = useToolsStore();
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
-
-  const [activeTab, setActiveTab] = useState<"info" | "upload">("info");
-
-  const hasUpload = filesUpload.length > 0;
-
-  // modes
-  const isForceInfo = showFileInfo && !hasUpload;
-  const isTabMode = showFileInfo && hasUpload;
-  const isUploadOnly = !showFileInfo && hasUpload;
-
-  const [isShow, setIsShow] = useState<boolean>(true)
 
   useEffect(() => {
     // Simulate an API call to fetch file list
@@ -99,11 +90,6 @@ export default function FilesPage() {
     fetchFiles();
   }, []);
 
-
-  // const handleSetExpired = () => {
-  //   useAuthStore.getState().expireSession();
-  // }
-
   return (
     <div className="content">
       <div className="file-container">
@@ -152,7 +138,7 @@ export default function FilesPage() {
         </div>
       </div> */}
       {
-        (showFileInfo || hasUpload) && (
+        (showFileInfo || filesUpload.length > 0) && (
           <FileSidebar/>
         )
       }
