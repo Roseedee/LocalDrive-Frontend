@@ -2,7 +2,7 @@ import '../styles/file.css'
 
 import type { ItemProps } from "../models/file.model";
 
-import folderIcon from "@/assets/icons/folder_1.png";
+import folderIcon from "@/assets/icons-file/folder.png";
 
 type Props = {
   item: ItemProps;

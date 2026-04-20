@@ -1,12 +1,12 @@
 import '../styles/actionContent.css'
 
-import createFolderIcon from '@/assets/icons/menu/create-folder.png';
-import createFileIcon from '@/assets/icons/menu/create-file.png';
-import downloadIcon from '@/assets/icons/menu/downloads.png';
-import deleteIcon from '@/assets/icons/menu/bin.png';
-import favoriteIcon from '@/assets/icons/menu/favorite.png';
-import shareIcon from '@/assets/icons/menu/send.png';
-import editIcon from '@/assets/icons/menu/edit.png';
+import createFolderIcon from '@/assets/icons-menu/create-folder.png';
+import createFileIcon from '@/assets/icons-menu/create-file.png';
+import downloadIcon from '@/assets/icons-menu/downloads.png';
+import deleteIcon from '@/assets/icons-menu/bin.png';
+import favoriteIcon from '@/assets/icons-menu/favorite.png';
+import shareIcon from '@/assets/icons-menu/send.png';
+import editIcon from '@/assets/icons-menu/edit.png';
 
 
 export default function ActionContent() {

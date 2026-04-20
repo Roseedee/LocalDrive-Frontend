@@ -1,4 +1,5 @@
 .left-sidebar {
+    flex-shrink: 0;
     box-sizing: border-box;
     z-index: 99;
     padding: var(--section-pad);

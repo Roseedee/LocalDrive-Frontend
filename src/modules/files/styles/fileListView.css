@@ -1,0 +1,93 @@
+.file-list {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 10px;
+    overflow-y: auto;
+    font-family: sans-serif;
+}
+
+/* header */
+.file-list-header {
+    background-color: white;
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) 1fr 0.8fr 0.5fr 40px;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #000000;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+/* row */
+.file-list-row {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) 1fr 0.8fr 0.5fr 40px;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f2f2f2;
+    transition: background 0.2s;
+}
+
+.file-list-row:hover {
+    background: #f9f9f9;
+}
+
+/* columns */
+.file-list-col {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+}
+
+.file-list-col.name {
+    gap: 10px;
+}
+
+.file-list-row .file-list-col.name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.file-name-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-list-col.action {
+    justify-content: end;
+}
+
+
+.file-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+}
+
+.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+.menu-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.menu-btn:hover {
+    background: #eee;
+}

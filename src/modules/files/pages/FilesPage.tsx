@@ -7,6 +7,7 @@ import { useFileStore } from "../store/file.store";
 import { useToolsStore } from "../store/tools.store";
 
 import File from "../components/File";
+import FileListView from "../components/FileListView";
 import FileSidebar from "../components/FileSidebar";
 
 import type { ItemProps } from "../models/file.model";
@@ -19,7 +20,7 @@ import imgTest3 from '@/assets/test/test3.jpg';
 
 export default function FilesPage() {
   const { filesUpload } = useFileStore();
-  const { showFileInfo } = useToolsStore();
+  const { isGridView, showFileInfo } = useToolsStore();
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
 
@@ -92,26 +93,32 @@ export default function FilesPage() {
 
   return (
     <div className="content">
-      <div className="file-container">
-        {itemList?.map((file, index) => (
-          <File key={index} item={file} />
-        ))}
-        {itemList?.map((file, index) => (
-          <File key={index} item={file} />
-        ))}
-        {itemList?.map((file, index) => (
-          <File key={index} item={file} />
-        ))}
-        {itemList?.map((file, index) => (
-          <File key={index} item={file} />
-        ))}
-        {itemList?.map((file, index) => (
-          <File key={index} item={file} />
-        ))}
-        {itemList?.map((file, index) => (
-          <File key={index} item={file} />
-        ))}
-      </div>
+      {
+        isGridView && (
+          <div className="file-container">
+            {itemList?.map((file, index) => (
+              <File key={index} item={file} />
+            ))}
+            {itemList?.map((file, index) => (
+              <File key={index} item={file} />
+            ))}
+            {itemList?.map((file, index) => (
+              <File key={index} item={file} />
+            ))}
+            {itemList?.map((file, index) => (
+              <File key={index} item={file} />
+            ))}
+            {itemList?.map((file, index) => (
+              <File key={index} item={file} />
+            ))}
+            {itemList?.map((file, index) => (
+              <File key={index} item={file} />
+            ))}
+          </div>
+        )
+      }
+
+      {/* grid view group by */}
       {/* <div className="file-container group-by">
         <div className="file-group">
           <div className="file-group-header">
@@ -138,8 +145,13 @@ export default function FilesPage() {
         </div>
       </div> */}
       {
+        !isGridView && (
+          <FileListView items={itemList}/>
+        )
+      }
+      {
         (showFileInfo || filesUpload.length > 0) && (
-          <FileSidebar/>
+          <FileSidebar />
         )
       }
     </div>

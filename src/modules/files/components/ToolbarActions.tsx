@@ -2,12 +2,12 @@ import '../styles/toolbarActions.css'
 
 import { useToolsStore } from '../store/tools.store';
 
-import viewIcon from '@/assets/icons/menu/dashboard.png';
-import selectIcon from '@/assets/icons/menu/check.png';
-import noticeIcon from '@/assets/icons/menu/notice.png';
-import viewFillIcon from '@/assets/icons/menu/dashboard-fill.png';
-import selectFillIcon from '@/assets/icons/menu/check-fill.png';
-import noticeFillIcon from '@/assets/icons/menu/notice-fill.png';
+import viewIcon from '@/assets/icons-menu/dashboard.png';
+import selectIcon from '@/assets/icons-menu/check.png';
+import noticeIcon from '@/assets/icons-menu/notice.png';
+import viewFillIcon from '@/assets/icons-menu/dashboard-fill.png';
+import selectFillIcon from '@/assets/icons-menu/check-fill.png';
+import noticeFillIcon from '@/assets/icons-menu/notice-fill.png';
 
 export default function ToolbarActions() {
     const { 
