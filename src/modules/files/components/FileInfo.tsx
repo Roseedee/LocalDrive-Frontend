@@ -3,7 +3,7 @@ import "../styles/fileInfo.css"
 // import { useFileStore } from "../store/file.store";
 import { useToolsStore } from "../store/tools.store";
 
-import imgTest1 from '@/assets/test1.jpg';
+import imgTest1 from '@/assets/test/test1.jpg';
 
 export default function FileInfo() {
     // const {} = useFileStore();

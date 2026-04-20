@@ -13,9 +13,9 @@ import type { ItemProps } from "../models/file.model";
 
 // import arrowIcon from "@/assets/icons/arrow.png"
 
-import imgTest1 from '@/assets/test1.jpg';
-import imgTest2 from '@/assets/test2.jpg';
-import imgTest3 from '@/assets/test3.jpg';
+import imgTest1 from '@/assets/test/test1.jpg';
+import imgTest2 from '@/assets/test/test2.jpg';
+import imgTest3 from '@/assets/test/test3.jpg';
 
 export default function FilesPage() {
   const { filesUpload } = useFileStore();
