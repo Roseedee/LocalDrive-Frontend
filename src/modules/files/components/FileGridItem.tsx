@@ -1,16 +1,15 @@
-import '../styles/file.css'
-
 import type { ItemProps } from "../models/file.model";
+import { useFileItem } from '../hooks/useFileItem';
 
 import folderIcon from "@/assets/icons-file/folder.png";
 
 type Props = {
-  item: ItemProps;
-  isUploading?: boolean;
-  progress?: number;
+  item: ItemProps,
+  onOpen?: (item: ItemProps) => void
 };
 
-export default function File({ item, isUploading, progress = 0 }: Props) {
+export default function FileGridItem({ item, onOpen }: Props) {
+  const {isSelected, onClick, onDoubleClick} = useFileItem(item, onOpen);
 
   const isFile = item.type === "file";
 
@@ -25,14 +24,16 @@ export default function File({ item, isUploading, progress = 0 }: Props) {
 
   return (
     <div
-      className={`file-item ${isFile ? "file" : "folder"}`}
+      className={`file-item ${isFile ? "file" : "folder"} ${isSelected ? "selected" : ""}`}
       title={
         isFile
           ? `ชื่อไฟล์: ${item.name}\nขนาดไฟล์: ${item.fileSize} bytes\nประเภทไฟล์: ${item.fileType}`
           : `โฟลเดอร์: ${item.name}`
       }
+      onClick={onClick}
+      onDoubleClick={onDoubleClick}
     >
-      {isUploading && (
+      {/* {isUploading && (
         <div className="file-progress">
           <div className="progress">
             <div
@@ -42,7 +43,7 @@ export default function File({ item, isUploading, progress = 0 }: Props) {
           </div>
           <h5>{progress}%</h5>
         </div>
-      )}
+      )} */}
 
       <div className="file-icon-container">
         <img className="image-icon" src={getFileIcon()} />

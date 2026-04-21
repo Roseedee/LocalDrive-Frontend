@@ -35,6 +35,10 @@
     background: #f9f9f9;
 }
 
+.file-list-row.selected {
+    background-color: #f1f1f1;
+}
+
 /* columns */
 .file-list-col {
     display: flex;

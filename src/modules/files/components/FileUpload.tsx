@@ -34,9 +34,9 @@ export default function FileUpload() {
 
     return (
         <>
-            <div className="row center between">
+            <div className="file-upload-list-header">
                 <h4>รายการอัพโหลด{`(${filesUpload.filter(f => f.status==='pending').length})`}</h4>
-                <span className='file-upload-text-btn-clear' onClick={() => setFilesUpload([])}>ล้าง</span>
+                <span className='file-upload-text-btn-clear' onClick={() => setFilesUpload([])}>ล้างรายการทั้งหมด</span>
             </div>
             <div className="file-upload-list">
                 {filesUpload.map((file) => (

@@ -1,14 +1,3 @@
-p.no-item {
-    color: #b6b6b6;
-    font-size: 18px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* margin-top: 20px; */
-}
-
 .file-item {
     user-select: none;
     /* flex-grow: 1;    */
@@ -31,6 +20,12 @@ p.no-item {
         /* background-color: #fbe4fd; */
         /* box-shadow: none; */
     }
+}
+
+.file-item.selected {
+    background-color: #f1f1f1;
+    /* outline: 2px solid #dddddd; */
+    outline-offset: -2px;
 }
 
 .file-item .file-icon-container {
@@ -113,10 +108,4 @@ p.no-item {
 .other-file-icon {
     width: 32px;
     height: 32px;
-}
-
-.file-selected {
-    background-color: #f1f1f1;
-    /* outline: 2px solid #dddddd; */
-    outline-offset: -2px;
 }

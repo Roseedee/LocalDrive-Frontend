@@ -1,8 +1,8 @@
-.file-upload-container {
-    /* flex-shrink: 0; */
-    width: var(--right-sidebar-width);
-    /* background-color: #fff; */
-    
+.file-upload-list-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .file-upload-text-btn-clear {

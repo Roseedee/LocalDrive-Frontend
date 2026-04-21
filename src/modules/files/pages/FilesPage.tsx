@@ -6,8 +6,8 @@ import "../styles/filePage.css"
 import { useFileStore } from "../store/file.store";
 import { useToolsStore } from "../store/tools.store";
 
-import File from "../components/File";
 import FileListView from "../components/FileListView";
+import FileGridView from "../components/FileGridView";
 import FileSidebar from "../components/FileSidebar";
 
 import type { ItemProps } from "../models/file.model";
@@ -91,30 +91,15 @@ export default function FilesPage() {
     fetchFiles();
   }, []);
 
+  const handleOpen = (item: ItemProps) => {
+    window.alert("Open Item " + item.name)
+  }
+
   return (
     <div className="content">
       {
         isGridView && (
-          <div className="file-container">
-            {itemList?.map((file, index) => (
-              <File key={index} item={file} />
-            ))}
-            {itemList?.map((file, index) => (
-              <File key={index} item={file} />
-            ))}
-            {itemList?.map((file, index) => (
-              <File key={index} item={file} />
-            ))}
-            {itemList?.map((file, index) => (
-              <File key={index} item={file} />
-            ))}
-            {itemList?.map((file, index) => (
-              <File key={index} item={file} />
-            ))}
-            {itemList?.map((file, index) => (
-              <File key={index} item={file} />
-            ))}
-          </div>
+          <FileGridView items={itemList} onOpen={handleOpen}/>
         )
       }
 
@@ -146,7 +131,7 @@ export default function FilesPage() {
       </div> */}
       {
         !isGridView && (
-          <FileListView items={itemList}/>
+          <FileListView items={itemList} onOpen={handleOpen}/>
         )
       }
       {
