@@ -30,7 +30,10 @@ export default function FileGridItem({ item, onOpen }: Props) {
           ? `ชื่อไฟล์: ${item.name}\nขนาดไฟล์: ${item.fileSize} bytes\nประเภทไฟล์: ${item.fileType}`
           : `โฟลเดอร์: ${item.name}`
       }
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick(e);
+      }}
       onDoubleClick={onDoubleClick}
     >
       {/* {isUploading && (

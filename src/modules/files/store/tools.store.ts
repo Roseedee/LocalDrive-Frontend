@@ -2,20 +2,20 @@ import { create } from "zustand";
 
 interface ToolsState {
     isGridView: boolean;
-    hasMultipleFilesSelected: boolean;
+    isMultiSelectMode: boolean;
     showFileInfo: boolean;
     
     setIsGridView: (isGrid: boolean) => void;
-    setHasMultipleFilesSelected: (isMulti: boolean) => void;
+    setIsMultiSelectMode: (isMulti: boolean) => void;
     setShowFileInfo: (show: boolean) => void;
 }
 
 export const useToolsStore = create<ToolsState>((set) => ({
     isGridView: true,
-    hasMultipleFilesSelected: false,
+    isMultiSelectMode: false,
     showFileInfo: false,
 
     setIsGridView: (isGrid) => set({isGridView: isGrid}),
-    setHasMultipleFilesSelected: (isMulti) => set({hasMultipleFilesSelected: isMulti}),
+    setIsMultiSelectMode: (isMulti) => set({isMultiSelectMode: isMulti}),
     setShowFileInfo: (show) => set({showFileInfo: show}),
 }))

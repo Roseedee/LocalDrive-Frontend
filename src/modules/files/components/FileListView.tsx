@@ -1,6 +1,10 @@
 import "../styles/fileListView.css"
 
+import { useToolsStore } from "../store/tools.store"
+import { useFileStore } from "../store/file.store"
+
 import type { ItemProps } from "../models/file.model"
+
 import FileListItem from "./FileListItem"
 
 type Props = {
@@ -9,9 +13,16 @@ type Props = {
 }
 
 export default function FileListView({ items, onOpen }: Props) {
+    const setIsMultiSelectMode = useToolsStore((s) => s.setIsMultiSelectMode)
+    const clearSelection = useFileStore((s) => s.clearSelection);
+
+    const handleClickEmptyArea = () => {
+        clearSelection();
+        setIsMultiSelectMode(false);
+    }
 
     return (
-        <div className="file-list">
+        <div className="file-list-container" onClick={handleClickEmptyArea}>
             <div className="file-list-header">
                 <div className="file-list-col name">ชื่อ</div>
                 <div className="file-list-col">เจ้าของ</div>

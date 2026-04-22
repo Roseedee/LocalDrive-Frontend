@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-import "../styles/filePage.css"
-
 // import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { useFileStore } from "../store/file.store";
 import { useToolsStore } from "../store/tools.store";
@@ -83,7 +81,153 @@ export default function FilesPage() {
             type: "folder",
             createdAt: new Date(),
             updatedAt: new Date()
-          }
+          },
+          {
+            id: "7",
+            name: "ไฟล์ทั่วไป.txt",
+            type: "folder",
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "8",
+            name: "ไฟล์ทั่วไป.txt",
+            type: "folder",
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "9",
+            name: "ไฟล์ทั่วไป.txt",
+            type: "folder",
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "10",
+            name: "ไฟล์ทั่วไป.txt",
+            type: "folder",
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "11",
+            name: "ไฟล์ทั่วไป.txt",
+            type: "folder",
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "12",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "13",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "14",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "15",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "16",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "17",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "18",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "19",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "20",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "21",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: "22",
+            name: "เอกสาร.pdf",
+            type: "file",
+            fileURL: imgTest2,
+            fileType: "image/jpeg",
+            fileSize: 204800,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+
         ]);
       }, 1000);
     };

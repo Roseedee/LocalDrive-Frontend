@@ -8,7 +8,10 @@ import cancelIcon from '@/assets/icons/close.png';
 
 
 export default function FileUpload() {
-    const { filesUpload, setFilesUpload, removeFileUpload } = useFileStore();
+    // const { filesUpload, setFilesUpload, removeFileUpload } = useFileStore();
+    const filesUpload = useFileStore((s) => s.filesUpload)
+    const setFilesUpload = useFileStore((s) => s.setFilesUpload)
+    const removeFileUpload = useFileStore((s) => s.removeFileUpload)
 
     const handleCancelUpload = (id: string) => {
         removeFileUpload(id);

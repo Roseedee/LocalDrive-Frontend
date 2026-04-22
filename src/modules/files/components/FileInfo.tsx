@@ -7,7 +7,7 @@ import imgTest1 from '@/assets/test/test1.jpg';
 
 export default function FileInfo() {
     // const {} = useFileStore();
-    const { setShowFileInfo } = useToolsStore();
+    const setShowFileInfo = useToolsStore((s) => s.setShowFileInfo);
     return (
         <>
             <div className="file-info-header">

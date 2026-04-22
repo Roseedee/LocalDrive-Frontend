@@ -59,14 +59,17 @@ export default function FileListItem({ item, onOpen}: Props) {
     return (
         <div
             className={`file-list-row ${isSelected ? 'selected' : ''}`}
-            onClick={onClick}
+            onClick={(e) => {
+                e.stopPropagation();
+                onClick(e);
+            }}
             onDoubleClick={onDoubleClick}
         >
             <div className="file-list-col name">
                 <div className="file-icon">
                     <img src={getFileIcon(item)} alt="" />
                 </div>
-                <span className="file-name-text">item.name</span>
+                <span className="file-name-text">{item.name}</span>
             </div>
 
             <div className="file-list-col">

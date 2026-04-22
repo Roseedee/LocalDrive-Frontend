@@ -9,8 +9,8 @@ import FileInfo from "./FileInfo";
 import FileUpload from "./FileUpload";
 
 export default function FileSidebar() {
-  const { filesUpload } = useFileStore();
-  const { showFileInfo } = useToolsStore();
+  const filesUpload = useFileStore((s) => s.filesUpload);
+  const showFileInfo = useToolsStore((s) => s.showFileInfo);
 
   const [activeTab, setActiveTab] = useState<'info' | 'upload'>('info')
 
