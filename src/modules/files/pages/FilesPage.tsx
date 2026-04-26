@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 // import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { useFileStore } from "../store/file.store";
 import { useToolsStore } from "../store/tools.store";
+import { getItemsList } from "../api/file.api";
 
 import FileListView from "../components/FileListView";
 import FileGridView from "../components/FileGridView";
@@ -10,226 +11,49 @@ import FileSidebar from "../components/FileSidebar";
 
 import type { ItemProps } from "../models/file.model";
 
-// import arrowIcon from "@/assets/icons/arrow.png"
-
-import imgTest1 from '@/assets/test/test1.jpg';
-import imgTest2 from '@/assets/test/test2.jpg';
-import imgTest3 from '@/assets/test/test3.jpg';
-
 export default function FilesPage() {
   const { filesUpload } = useFileStore();
   const { isGridView, showFileInfo } = useToolsStore();
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
 
-  useEffect(() => {
-    // Simulate an API call to fetch file list
-    const fetchFiles = async () => {
-      // Replace this with your actual API call
-      setTimeout(() => {
-        setItemList([
-          {
-            id: "1",
-            name: "รูปภาพทดสอบ.jpg",
-            type: "file",
-            fileURL: imgTest1,
-            fileType: "image/jpeg",
-            fileSize: 102400,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "2",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "3",
-            name: "โฟลเดอร์ตัวอย่าง",
-            type: "folder",
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "4",
-            name: "ไฟล์ทั่วไป.txt",
-            type: "file",
-            fileURL: imgTest3,
-            fileType: "image/jpeg",
-            fileSize: 51200,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "5",
-            name: "เอกสารตัวอย่าง.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "application/pdf",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "6",
-            name: "ไฟล์ทั่วไป.txt",
-            type: "folder",
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "7",
-            name: "ไฟล์ทั่วไป.txt",
-            type: "folder",
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "8",
-            name: "ไฟล์ทั่วไป.txt",
-            type: "folder",
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "9",
-            name: "ไฟล์ทั่วไป.txt",
-            type: "folder",
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "10",
-            name: "ไฟล์ทั่วไป.txt",
-            type: "folder",
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "11",
-            name: "ไฟล์ทั่วไป.txt",
-            type: "folder",
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "12",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "13",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "14",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "15",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "16",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "17",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "18",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "19",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "20",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "21",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            id: "22",
-            name: "เอกสาร.pdf",
-            type: "file",
-            fileURL: imgTest2,
-            fileType: "image/jpeg",
-            fileSize: 204800,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
+  function mapToItem(item: any): ItemProps {
+    const base = {
+      id: String(item.id),
+      name: item.name,
+      type: item.type,
+      parentId: item.parent_id ? String(item.parent_id) : undefined,
+      createdAt: new Date(item.created_at),
+      updatedAt: new Date(item.updated_at),
+    };
 
-        ]);
-      }, 1000);
+    if (item.type === "file") {
+      return {
+        ...base,
+        type: "file",
+        fileURL: `/api/files/${item.id}`,
+        fileType: item.mime_type,
+        fileSize: item.size,
+        extension: item.name.split('.').pop()
+      };
+    }
+
+    return {
+      ...base,
+      type: "folder",
+      childrenCount: item.children_count ?? 0
+    };
+  }
+
+  useEffect(() => {
+    const fetchFiles = async () => {
+      getItemsList().then((res) => {
+        if (res.status) {
+          const mapped = res.items.map(mapToItem);
+
+          setItemList(mapped);
+        }
+      })
     };
 
     fetchFiles();
@@ -243,7 +67,7 @@ export default function FilesPage() {
     <div className="content">
       {
         isGridView && (
-          <FileGridView items={itemList} onOpen={handleOpen}/>
+          <FileGridView items={itemList} onOpen={handleOpen} />
         )
       }
 
@@ -275,7 +99,7 @@ export default function FilesPage() {
       </div> */}
       {
         !isGridView && (
-          <FileListView items={itemList} onOpen={handleOpen}/>
+          <FileListView items={itemList} onOpen={handleOpen} />
         )
       }
       {

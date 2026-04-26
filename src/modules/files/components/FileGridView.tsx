@@ -26,21 +26,6 @@ export default function FileGridView({ items, onOpen }: Props) {
             {items?.map((file, index) => (
                 <FileGridItem key={index} item={file} onOpen={onOpen} />
             ))}
-            {items?.map((file, index) => (
-                <FileGridItem key={index} item={file} onOpen={onOpen} />
-            ))}
-            {items?.map((file, index) => (
-                <FileGridItem key={index} item={file} onOpen={onOpen} />
-            ))}
-            {items?.map((file, index) => (
-                <FileGridItem key={index} item={file} onOpen={onOpen} />
-            ))}
-            {items?.map((file, index) => (
-                <FileGridItem key={index} item={file} onOpen={onOpen} />
-            ))}
-            {items?.map((file, index) => (
-                <FileGridItem key={index} item={file} onOpen={onOpen} />
-            ))}
         </div>
     )
 }

@@ -2,16 +2,6 @@ import { api } from '@/shared/lib/axios';
 
 import { useFileStore } from '../store/file.store';
 
-export async function uploadFile() {
-    try {
-        const res = await api.post('/files/');
-        return res.data;
-    } catch (err) {
-        console.log('Error fetching current user:', err);
-        return null;
-    }
-}
-
 export async function uploadFileByID(id: string) {
     const { filesUpload, updateFileUpload } = useFileStore.getState();
 
@@ -45,5 +35,14 @@ export async function uploadFileByID(id: string) {
             status: "error"
         })
     }
+}
 
+export async function getItemsList() {
+    try {
+        const res = await api.get('/files/');
+        return res.data;
+    } catch (err) {
+        console.log('Error fetching current user:', err);
+        return null;
+    }
 }
