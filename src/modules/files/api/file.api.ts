@@ -12,10 +12,7 @@ export async function uploadFileByID(id: string) {
     formData.append("file", target.file);
 
     try {
-        const res = await api.post('/files/', formData, {
-            headers: {
-                "Content-Type": "multipart/form-data"
-            },
+        await api.post('/files/', formData, {
             onUploadProgress: (e) => {
                 const percent = Math.round((e.loaded / (e.total || 1)) * 100)
 
@@ -29,8 +26,9 @@ export async function uploadFileByID(id: string) {
             progress: 100,
             status: "completed"
         })
-        console.log(res)
+        // console.log(res)
     } catch (err) {
+        console.log(err)
         updateFileUpload(id, {
             status: "error"
         })

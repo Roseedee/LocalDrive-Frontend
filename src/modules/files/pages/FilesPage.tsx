@@ -28,10 +28,11 @@ export default function FilesPage() {
     };
 
     if (item.type === "file") {
+
       return {
         ...base,
         type: "file",
-        fileURL: `/api/files/${item.id}`,
+        fileURL: `/files/${item.id}`,
         fileType: item.mime_type,
         fileSize: item.size,
         extension: item.name.split('.').pop()
