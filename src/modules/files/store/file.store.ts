@@ -18,6 +18,11 @@ interface FileState {
   selectOne: (id: string) => void
   toggleSelect: (id: string) => void
   clearSelection: () => void
+
+  // Full view
+  isFullViewOpen: boolean
+  openFullView: () => void
+  closeFullView: () => void
 }
 
 export const useFileStore = create<FileState>((set) => ({
@@ -68,4 +73,9 @@ export const useFileStore = create<FileState>((set) => ({
     }),
 
   clearSelection: () => set({ selectedIds: [] }),
+
+  // Full view
+  isFullViewOpen: false,
+  openFullView: () => set({ isFullViewOpen: true }),
+  closeFullView: () => set({ isFullViewOpen: false }),
 }))

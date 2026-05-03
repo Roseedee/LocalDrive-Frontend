@@ -10,10 +10,13 @@ import FileGridView from "../components/FileGridView";
 import FileSidebar from "../components/FileSidebar";
 
 import type { ItemProps } from "../models/file.model";
+import FileFullView from "../components/FileFullView";
 
 export default function FilesPage() {
-  const { filesUpload } = useFileStore();
-  const { isGridView, showFileInfo } = useToolsStore();
+  const filesUpload = useFileStore((s) => s.filesUpload);
+  const isGridView = useToolsStore((s) => s.isGridView);
+  const showFileInfo = useToolsStore((s) => s.showFileInfo);
+  const openFullView = useFileStore((s) => s.openFullView);
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
 
@@ -62,11 +65,13 @@ export default function FilesPage() {
   }, []);
 
   const handleOpen = (item: ItemProps) => {
-    window.alert("Open Item " + item.name)
+    // window.alert("Open Item " + item.name)
+    openFullView();
   }
 
   return (
     <div className="content">
+      <FileFullView />
       {
         isGridView && (
           <FileGridView items={itemList} onOpen={handleOpen} />
