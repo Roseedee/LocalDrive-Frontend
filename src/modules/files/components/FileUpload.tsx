@@ -4,6 +4,8 @@ import { uploadFileByID } from '../api/file.api';
 
 import { useFileStore } from '../store/file.store';
 
+import { formatFileSize } from '../utils/formatFileSize';
+
 import cancelIcon from '@/assets/icons/close.png';
 
 
@@ -48,7 +50,7 @@ export default function FileUpload() {
                         <div className="item-info">
                             <div className='column'>
                                 <h5 className='file-name'>{file.name}</h5>
-                                <p className='tag'>{file.size} bytes</p>
+                                <p className='tag'>{formatFileSize(file.size || 0)}</p>
                             </div>
                             {
                                 file.status === 'uploading' ? (
@@ -67,7 +69,7 @@ export default function FileUpload() {
                 ))}
             </div>
             <button className="file-upload-btn" onClick={() => startUpload()}>ทดสอบอัพโหลด</button>
-            <button className="file-upload-btn">ปิด</button>
+            {/* <button className="file-upload-btn">ปิด</button> */}
         </>
     )
 }

@@ -31,6 +31,7 @@ export default function FilesPage() {
 
       return {
         ...base,
+        hash: item.hash,
         type: "file",
         fileURL: `/files/${item.id}`,
         fileType: item.mime_type,

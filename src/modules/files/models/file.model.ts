@@ -13,6 +13,7 @@ export interface BaseItem {
 }
 
 export interface FileModel extends BaseItem {
+  hash: string;
   type: "file";
 
   fileURL: string;

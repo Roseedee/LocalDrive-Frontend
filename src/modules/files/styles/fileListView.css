@@ -78,6 +78,12 @@
     height: 28px;
 }
 
+.file-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
 .avatar {
     width: 28px;
     height: 28px;
