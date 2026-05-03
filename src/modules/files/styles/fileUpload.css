@@ -31,17 +31,30 @@
     /* background-color: #d3d3d3; */
 }
 
-.file-upload-item .item-preview {
-    flex-shrink: 0;
-    width: 64px;
-    height: 45px;
-    object-fit: cover;
-    border-radius: 5px;
+.file-upload-item .file-upload-thumb {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 64px;
+    height: 45px;
+    flex-shrink: 0;
+    /* padding: 5px; */
+    overflow: hidden;
     border-radius: 5px;
-    /* border: 1px solid #ddd; */
+}
+
+.file-upload-item .file-upload-thumb .img-preview {
+    flex-shrink: 0;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.file-upload-item .file-upload-thumb .icon-file {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
 }
 
 .file-upload-item .item-info {
