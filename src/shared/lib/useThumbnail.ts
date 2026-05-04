@@ -8,7 +8,7 @@ export function useThumbnail(hash?: string) {
     if (!hash) return;
 
     const load = async () => {
-      const res = await api.get(`/files/thumbnail/${hash}`, {
+      const res = await api.get(`/files/${hash}/thumbnail`, {
         responseType: "blob"
       });
 

@@ -10,7 +10,7 @@ import FileGridView from "../components/FileGridView";
 import FileSidebar from "../components/FileSidebar";
 
 import type { ItemProps } from "../models/file.model";
-import FileFullView from "../components/FileFullView";
+import FileFullViewPopup from "../components/FileFullViewPopup";
 
 export default function FilesPage() {
   const filesUpload = useFileStore((s) => s.filesUpload);
@@ -71,7 +71,7 @@ export default function FilesPage() {
 
   return (
     <div className="content">
-      <FileFullView />
+      <FileFullViewPopup />
       {
         isGridView && (
           <FileGridView items={itemList} onOpen={handleOpen} />

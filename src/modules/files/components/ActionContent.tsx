@@ -3,6 +3,8 @@ import '../styles/actionContent.css'
 
 import { useFileStore } from '../store/file.store';
 
+import CreateFolderPopup from './CreateFolderPopup';
+
 import createFolderIcon from '@/assets/icons-menu/create-folder.png';
 import createFileIcon from '@/assets/icons-menu/create-file.png';
 
@@ -16,9 +18,20 @@ export default function ActionContent() {
     const selectedIds = useFileStore((s) => s.selectedIds);
     const [isSelect, setIsSelect] = useState<boolean>(selectedIds.length > 0);
 
+    const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
+
     useEffect(() => {
         setIsSelect(selectedIds.length > 0);
     }, [selectedIds])
+
+    const handleCreateFolder = () => {
+        // window.alert("create folder")
+        setIsCreateFolderOpen(true);
+    }
+
+    const handleCreateFile = () => {
+        window.alert("create file")
+    }
 
     const handleDownload = async () => {
         window.alert("download")
@@ -44,6 +57,7 @@ export default function ActionContent() {
 
     return (
         <div className="action-content">
+            <CreateFolderPopup open={isCreateFolderOpen} onClose={() => setIsCreateFolderOpen(false)} />
 
             {selectedIds.length > 1 && (
                     <div className="primary-actions">
@@ -53,11 +67,11 @@ export default function ActionContent() {
             {
                 (!(selectedIds.length > 1)) && (
                     <div className="primary-actions">
-                        <button className="action-btn">
+                        <button className="action-btn" onClick={handleCreateFolder}>
                             <img src={createFolderIcon} alt="Create Folder" />
                             <span>สร้างโฟลเดอร์</span>
                         </button>
-                        <button className="action-btn">
+                        <button className="action-btn" onClick={handleCreateFile}>
                             <img src={createFileIcon} alt="Create File" />
                             <span>สร้างไฟล์</span>
                         </button>

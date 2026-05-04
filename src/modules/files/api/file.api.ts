@@ -35,6 +35,19 @@ export async function uploadFileByID(id: string) {
     }
 }
 
+export async function createFolder(name: string, parentId?: string | null) {
+    try {
+        const res = await api.post('/files/', {
+            name,
+            parentId: parentId || null,
+        });
+        return res.data;
+    } catch (err) {
+        console.log('Error creating folder:', err);
+        return null;
+    }
+}
+
 export async function getItemsList() {
     try {
         const res = await api.get('/files/');

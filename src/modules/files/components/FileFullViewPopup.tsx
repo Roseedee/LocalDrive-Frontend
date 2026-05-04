@@ -2,7 +2,7 @@ import { Overlay } from "./Overlay";
 
 import { useFileStore } from "../store/file.store";
 
-export default function FileFullView() {
+export default function FileFullViewPopup() {
     const isFullViewOpen = useFileStore((s) => s.isFullViewOpen);
     const closeFullView = useFileStore((s) => s.closeFullView);
 
