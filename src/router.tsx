@@ -27,10 +27,6 @@ export const router = createBrowserRouter([
                 path: "/",
                 element: <AppLayout />,
                 children: [
-                    {
-                        index: true,
-                        element: <Navigate to="/files" replace />
-                    },
                     filesRoutes
                 ]
             }

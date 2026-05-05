@@ -48,36 +48,38 @@ export default function CreateFolderPopup({ open, onClose, parentId = null }: Cr
 
     return (
         <Overlay open={open} onClose={onClose}>
-            <div className="row between">
-                <h3>Create Folder</h3>
-                <button onClick={onClose} className="popup-close-btn">
-                    <img src={closeIcon} alt="Close" />
-                </button>
-            </div>
+            <div className="overlay-card">
+                <div className="row between">
+                    <h3>Create Folder</h3>
+                    <button onClick={onClose} className="popup-close-btn">
+                        <img src={closeIcon} alt="Close" />
+                    </button>
+                </div>
 
-            <div className="input-container-popup">
-                <input
-                    type="text"
-                    id="folder-name"
-                    placeholder="Enter folder name"
-                    value={folderName}
-                    onChange={onInputChange}
-                    disabled={loading}
-                />
-                {error && <p className="error-message">{error}</p>}
-            </div>
+                <div className="input-container-popup">
+                    <input
+                        type="text"
+                        id="folder-name"
+                        placeholder="Enter folder name"
+                        value={folderName}
+                        onChange={onInputChange}
+                        disabled={loading}
+                    />
+                    {error && <p className="error-message">{error}</p>}
+                </div>
 
-            <div className="btn-container-popup">
-                <button className="cancel" onClick={onClose} disabled={loading}>
-                    ยกเลิก
-                </button>
-                <button
-                    className="confirm"
-                    onClick={handleCreateFolder}
-                    disabled={loading || !!validateFolderName(folderName)}
-                >
-                    {loading ? "กำลังสร้าง..." : "สร้าง"}
-                </button>
+                <div className="btn-container-popup">
+                    <button className="cancel" onClick={onClose} disabled={loading}>
+                        ยกเลิก
+                    </button>
+                    <button
+                        className="confirm"
+                        onClick={handleCreateFolder}
+                        disabled={loading || !!validateFolderName(folderName)}
+                    >
+                        {loading ? "กำลังสร้าง..." : "สร้าง"}
+                    </button>
+                </div>
             </div>
         </Overlay>
     );

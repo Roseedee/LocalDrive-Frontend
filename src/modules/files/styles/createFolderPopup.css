@@ -1,0 +1,6 @@
+.create-folder-popup {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  gap: 10px;
+}

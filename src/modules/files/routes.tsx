@@ -1,7 +1,7 @@
 import FilesPage from "./pages/FilesPage";
 
 export const filesRoutes = {
-    path: "files",
+    path: "*",
     children: [
         {
             index: true,

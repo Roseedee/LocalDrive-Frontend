@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 
 import type { FileUploadModel } from "../models/itemUpload.model"
+import type { FileModel } from '../models/file.model'
 
 interface FileState {
   // Upload
@@ -12,6 +13,9 @@ interface FileState {
   updateFileUpload: (id: string, data: Partial<FileUploadModel>) => void
   removeFileUpload: (id: string) => void
 
+  currentPath: string
+  setCurrentPath: (path: string) => void
+
   // Selection
   selectedIds: string[]
 
@@ -21,7 +25,9 @@ interface FileState {
 
   // Full view
   isFullViewOpen: boolean
-  openFullView: () => void
+  activeFile: FileModel | null
+  updateActiveFile: (file: FileModel) => void
+  openFullView: (file: FileModel) => void
   closeFullView: () => void
 }
 
@@ -53,6 +59,9 @@ export const useFileStore = create<FileState>((set) => ({
       filesUpload: state.filesUpload.filter((f) => f.id !== id),
     })),
 
+  currentPath: "/",
+  setCurrentPath: (path) => set({ currentPath: path }),
+
   // Selection
   selectedIds: [],
 
@@ -76,6 +85,8 @@ export const useFileStore = create<FileState>((set) => ({
 
   // Full view
   isFullViewOpen: false,
-  openFullView: () => set({ isFullViewOpen: true }),
-  closeFullView: () => set({ isFullViewOpen: false }),
+  activeFile: null,
+  updateActiveFile: (file) => set({ activeFile: file }),
+  openFullView: (file) => set({ isFullViewOpen: true, activeFile: file }),
+  closeFullView: () => set({ isFullViewOpen: false, activeFile: null }),
 }))

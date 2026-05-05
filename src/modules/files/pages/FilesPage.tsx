@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { useFileStore } from "../store/file.store";
@@ -9,14 +10,18 @@ import FileListView from "../components/FileListView";
 import FileGridView from "../components/FileGridView";
 import FileSidebar from "../components/FileSidebar";
 
-import type { ItemProps } from "../models/file.model";
+import type { FileModel, ItemProps } from "../models/file.model";
 import FileFullViewPopup from "../components/FileFullViewPopup";
 
 export default function FilesPage() {
+  
+
   const filesUpload = useFileStore((s) => s.filesUpload);
   const isGridView = useToolsStore((s) => s.isGridView);
   const showFileInfo = useToolsStore((s) => s.showFileInfo);
   const openFullView = useFileStore((s) => s.openFullView);
+  const activeFile = useFileStore((s) => s.activeFile);
+  const updateActiveFile = useFileStore((s) => s.updateActiveFile);
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
 
@@ -51,6 +56,11 @@ export default function FilesPage() {
   }
 
   useEffect(() => {
+    console.log()
+    
+  }, [])
+
+  useEffect(() => {
     const fetchFiles = async () => {
       getItemsList().then((res) => {
         if (res.status) {
@@ -66,12 +76,30 @@ export default function FilesPage() {
 
   const handleOpen = (item: ItemProps) => {
     // window.alert("Open Item " + item.name)
-    openFullView();
+    if(item.type === "file") {
+      openFullView(item);
+    }
+  }
+
+  const handleFullViewPrevious = () => {
+    // window.alert("Previous")
+    let currentIndex = itemList?.findIndex(i => (i.type === "file" && i.id === activeFile?.id)) ?? -1;
+    if(currentIndex > 0) {
+      updateActiveFile((itemList![currentIndex - 1]) as FileModel);
+    }
+  }
+
+  const handleFullViewNext = () => {
+    // window.alert("Next")
+    let currentIndex = itemList?.findIndex(i => (i.type === "file" && i.id === activeFile?.id)) ?? -1;
+    if(currentIndex < (itemList?.length || 0) - 1) {
+      updateActiveFile((itemList![currentIndex + 1]) as FileModel);
+    }
   }
 
   return (
     <div className="content">
-      <FileFullViewPopup />
+      <FileFullViewPopup onPrevious={handleFullViewPrevious} onNext={handleFullViewNext} />
       {
         isGridView && (
           <FileGridView items={itemList} onOpen={handleOpen} />
