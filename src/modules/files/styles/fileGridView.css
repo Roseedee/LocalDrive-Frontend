@@ -99,7 +99,7 @@
 }
 
 .file-item .file-icon-container {
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
     border-radius: 5px;
     width: 100%;
     height: 90%;
