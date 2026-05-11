@@ -3,6 +3,8 @@ import '../styles/actionContent.css'
 
 import { useFileStore } from '../store/file.store';
 
+import { deleteItem } from '../api/file.api';
+
 import CreateFolderPopup from './CreateFolderPopup';
 
 import createFolderIcon from '@/assets/icons-menu/create-folder.png';
@@ -16,6 +18,7 @@ import editIcon from '@/assets/icons-menu/edit.png';
 
 export default function ActionContent() {
     const selectedIds = useFileStore((s) => s.selectedIds);
+    const setFileIdsToDelete = useFileStore((s) => s.setFileIdsToDelete);
     const [isSelect, setIsSelect] = useState<boolean>(selectedIds.length > 0);
 
     const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
@@ -38,7 +41,24 @@ export default function ActionContent() {
     }
 
     const handleDelete = () => {
-        window.alert("delete")
+        // window.alert("delete")
+
+        if (selectedIds.length === 0) return;
+
+        selectedIds.forEach(async (id) => {
+
+            const deletedIds: string[] = [];
+
+            await deleteItem(id).then((res) => {
+                // console.log(res)
+                if (res.file_id) {
+                    deletedIds.push(res.file_id);
+                }
+            }).catch((err) => {
+                console.log(err)
+            });
+            setFileIdsToDelete(deletedIds);
+        });
     }
 
     const handleFavorite = async () => {
@@ -60,9 +80,9 @@ export default function ActionContent() {
             <CreateFolderPopup open={isCreateFolderOpen} onClose={() => setIsCreateFolderOpen(false)} />
 
             {selectedIds.length > 1 && (
-                    <div className="primary-actions">
-                        <h4>เลือกไว้ {selectedIds.length} รายการ</h4>
-                    </div>
+                <div className="primary-actions">
+                    <h4>เลือกไว้ {selectedIds.length} รายการ</h4>
+                </div>
             )}
             {
                 (!(selectedIds.length > 1)) && (

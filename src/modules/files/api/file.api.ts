@@ -129,3 +129,13 @@ export async function getItemsList() {
         return null;
     }
 }
+
+export async function deleteItem(id: string) {
+    try {
+        const res = await api.delete(`/files/${id}`);
+        return res.data;
+    } catch (err) {
+        console.log('Error deleting item:', err);
+        return null;
+    }
+}

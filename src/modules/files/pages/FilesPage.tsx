@@ -23,6 +23,8 @@ export default function FilesPage() {
   const updateActiveFile = useFileStore((s) => s.updateActiveFile);
   const filesUploadSuccess = useFileStore((s) => s.filesUploadSuccess);
   const setFilesUploadSuccess = useFileStore((s) => s.setFilesUploadSuccess);
+  const fileIdsToDelete = useFileStore((s) => s.fileIdsToDelete);
+  const setFileIdsToDelete = useFileStore((s) => s.setFileIdsToDelete);
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
 
@@ -56,8 +58,8 @@ export default function FilesPage() {
     };
   }
 
+  // update itemList when upload success
   useEffect(() => {
-
     if (filesUploadSuccess.length > 0) {
 
       setItemList((prev) => {
@@ -76,13 +78,20 @@ export default function FilesPage() {
           ...(prev || [])
         ];
       });
-      
+
       setFilesUploadSuccess([]);
     }
-
     // console.log("Files Upload Success", itemList)
-
   }, [filesUploadSuccess]);
+
+
+  // update itemList when delete success
+  useEffect(() => {
+    if (fileIdsToDelete.length > 0) {
+      setItemList((prev) => prev?.filter(i => !fileIdsToDelete.includes(i.id)) || null);
+      setFileIdsToDelete([]);
+    }
+  }, [fileIdsToDelete]);
 
   useEffect(() => {
     const fetchFiles = async () => {

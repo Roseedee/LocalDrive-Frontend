@@ -1,6 +1,5 @@
 import type { ItemProps } from "../models/file.model"
 import { useToolsStore } from "../store/tools.store"
-import { useThumbnail } from "@/shared/lib/useThumbnail";
 
 import folderSmallIcon from "@/assets/icons-file/folder-small.png"
 import folderIcon from "@/assets/icons-file/folder.png"
