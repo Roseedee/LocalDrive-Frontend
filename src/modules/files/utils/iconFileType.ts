@@ -16,12 +16,12 @@ import rarIcon from "@/assets/icons-file/rar.png"
 // import codeIcon from "@/assets/icons-file/code.png"
 import unknownIcon from "@/assets/icons-file/unknown.png"
 
-export function iconFile(file: ItemProps) {
+export function iconFile(file: ItemProps, thumb?: string | null) {
     const isGridView = useToolsStore((s) => s.isGridView);
     if (file.type === "folder") return isGridView ? folderIcon : folderSmallIcon;
 
     const isImage = file.fileType?.startsWith("image/");
-    const thumb = useThumbnail(isImage ? file.hash : undefined);
+    // const thumb = isImage ? useThumbnail(file.hash) : null;
     if (isGridView && thumb) return thumb;
     if(isImage) return photoIcon;
 

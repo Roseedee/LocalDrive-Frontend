@@ -12,7 +12,7 @@ export async function uploadFileByID(id: string) {
     formData.append("file", target.file);
 
     try {
-        await api.post('/files/', formData, {
+        const res = await api.post('/files/', formData, {
             onUploadProgress: (e) => {
                 const percent = Math.round((e.loaded / (e.total || 1)) * 100)
 
@@ -26,12 +26,84 @@ export async function uploadFileByID(id: string) {
             progress: 100,
             status: "completed"
         })
+        return res;
         // console.log(res)
     } catch (err) {
         console.log(err)
         updateFileUpload(id, {
             status: "error"
         })
+    }
+}
+
+export async function uploadPendingFiles() {
+    const { filesUpload, updateFileUpload } = useFileStore.getState();
+
+    const pendingFiles = filesUpload.filter(
+        f => f.status === "pending"
+    );
+
+    if (pendingFiles.length === 0) return;
+
+    const formData = new FormData();
+
+    pendingFiles.forEach(f => {
+
+        formData.append("file", f.file);
+
+        updateFileUpload(f.id, {
+            status: "uploading",
+            progress: 0
+        });
+    });
+
+    try {
+
+        const res = await api.post('/files/', formData, {
+
+            onUploadProgress: (e) => {
+
+                const percent = Math.round(
+                    (e.loaded / (e.total || 1)) * 100
+                );
+
+                // progress รวม
+                pendingFiles.forEach(f => {
+                    updateFileUpload(f.id, {
+                        progress: percent
+                    });
+                });
+            }
+        });
+
+        const uploadedItems = res.data.items;
+
+        pendingFiles.forEach((f) => {
+
+            // const uploaded = uploadedItems[index];
+
+            updateFileUpload(f.id, {
+                progress: 100,
+                status: "completed"
+            });
+
+            // console.log(uploaded);
+        });
+
+        return uploadedItems;
+
+    } catch (err) {
+
+        console.log(err);
+
+        pendingFiles.forEach(f => {
+
+            updateFileUpload(f.id, {
+                status: "error"
+            });
+        });
+
+        throw err;
     }
 }
 

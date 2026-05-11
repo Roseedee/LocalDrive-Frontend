@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 // import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { useFileStore } from "../store/file.store";
@@ -14,7 +13,7 @@ import type { FileModel, ItemProps } from "../models/file.model";
 import FileFullViewPopup from "../components/FileFullViewPopup";
 
 export default function FilesPage() {
-  
+
 
   const filesUpload = useFileStore((s) => s.filesUpload);
   const isGridView = useToolsStore((s) => s.isGridView);
@@ -22,6 +21,8 @@ export default function FilesPage() {
   const openFullView = useFileStore((s) => s.openFullView);
   const activeFile = useFileStore((s) => s.activeFile);
   const updateActiveFile = useFileStore((s) => s.updateActiveFile);
+  const filesUploadSuccess = useFileStore((s) => s.filesUploadSuccess);
+  const setFilesUploadSuccess = useFileStore((s) => s.setFilesUploadSuccess);
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
 
@@ -56,9 +57,32 @@ export default function FilesPage() {
   }
 
   useEffect(() => {
-    console.log()
-    
-  }, [])
+
+    if (filesUploadSuccess.length > 0) {
+
+      setItemList((prev) => {
+
+        const existingIds = new Set(
+          prev?.map(i => i.id)
+        );
+
+        const newItems = filesUploadSuccess.filter(
+          i => !existingIds.has(i.id)
+        );
+
+
+        return [
+          ...newItems,
+          ...(prev || [])
+        ];
+      });
+      
+      setFilesUploadSuccess([]);
+    }
+
+    // console.log("Files Upload Success", itemList)
+
+  }, [filesUploadSuccess]);
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -76,7 +100,7 @@ export default function FilesPage() {
 
   const handleOpen = (item: ItemProps) => {
     // window.alert("Open Item " + item.name)
-    if(item.type === "file") {
+    if (item.type === "file") {
       openFullView(item);
     }
   }
@@ -84,7 +108,7 @@ export default function FilesPage() {
   const handleFullViewPrevious = () => {
     // window.alert("Previous")
     let currentIndex = itemList?.findIndex(i => (i.type === "file" && i.id === activeFile?.id)) ?? -1;
-    if(currentIndex > 0) {
+    if (currentIndex > 0) {
       updateActiveFile((itemList![currentIndex - 1]) as FileModel);
     }
   }
@@ -92,7 +116,7 @@ export default function FilesPage() {
   const handleFullViewNext = () => {
     // window.alert("Next")
     let currentIndex = itemList?.findIndex(i => (i.type === "file" && i.id === activeFile?.id)) ?? -1;
-    if(currentIndex < (itemList?.length || 0) - 1) {
+    if (currentIndex < (itemList?.length || 0) - 1) {
       updateActiveFile((itemList![currentIndex + 1]) as FileModel);
     }
   }

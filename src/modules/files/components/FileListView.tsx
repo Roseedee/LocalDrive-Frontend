@@ -31,8 +31,8 @@ export default function FileListView({ items, onOpen }: Props) {
                 <div className="file-list-col action"></div>
             </div>
 
-            {items?.map((file) => (
-                <FileListItem item={file} onOpen={onOpen}/>
+            {items?.map((file, index) => (
+                <FileListItem key={index} item={file} onOpen={onOpen}/>
             ))}
         </div>
     )

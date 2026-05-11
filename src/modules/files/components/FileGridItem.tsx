@@ -3,6 +3,7 @@ import { useFileItem } from '../hooks/useFileItem';
 
 import { formatFileSize } from "../utils/formatFileSize";
 import { iconFile } from "../utils/iconFileType";
+import { useThumbnail } from "@/shared/lib/useThumbnail";
 
 type Props = {
   item: ItemProps,
@@ -13,6 +14,11 @@ export default function FileGridItem({ item, onOpen }: Props) {
   const { isSelected, onClick, onDoubleClick } = useFileItem(item, onOpen);
   const isFile = item.type === "file";
   const isImage = isFile && item.fileType?.startsWith("image/");
+  const thumb = useThumbnail(
+    isImage
+      ? item.hash
+      : null
+  );
 
   return (
     <div
@@ -43,7 +49,7 @@ export default function FileGridItem({ item, onOpen }: Props) {
       <div className={`file-icon-container ${isImage ? "image-thumb" : ""}`}>
         {
           isImage ? (
-            <img className="image-thumb" src={iconFile(item)} alt={item.name} />
+            <img className="image-thumb" src={iconFile(item, thumb)} alt={item.name} />
           ) : (
             <img className="file-icon" src={iconFile(item)} alt={item.name} />
           )

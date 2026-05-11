@@ -1,17 +1,19 @@
 import { create } from 'zustand'
 
 import type { FileUploadModel } from "../models/itemUpload.model"
-import type { FileModel } from '../models/file.model'
+import type { FileModel, ItemProps } from '../models/file.model'
 
 interface FileState {
   // Upload
   filesUpload: FileUploadModel[]
+  filesUploadSuccess: ItemProps[]
 
   setFilesUpload: (files: FileUploadModel[]) => void
   addFileUpload: (file: FileUploadModel) => void
   addManyFileUpload: (files: FileUploadModel[]) => void
   updateFileUpload: (id: string, data: Partial<FileUploadModel>) => void
   removeFileUpload: (id: string) => void
+  setFilesUploadSuccess: (files: ItemProps[]) => void
 
   currentPath: string
   setCurrentPath: (path: string) => void
@@ -34,8 +36,9 @@ interface FileState {
 export const useFileStore = create<FileState>((set) => ({
   // Upload
   filesUpload: [],
-
+  filesUploadSuccess: [],
   setFilesUpload: (files) => set({ filesUpload: files }),
+  setFilesUploadSuccess: (files) => set({ filesUploadSuccess: files }),
 
   addFileUpload: (file) =>
     set((state) => ({

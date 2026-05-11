@@ -1,6 +1,7 @@
 import '../styles/fileUpload.css'
+import type { ItemProps } from '../models/file.model';
 
-import { uploadFileByID } from '../api/file.api';
+import { uploadPendingFiles } from '../api/file.api';
 
 import { useFileStore } from '../store/file.store';
 
@@ -29,21 +30,68 @@ export default function FileUpload() {
     const filesUpload = useFileStore((s) => s.filesUpload)
     const setFilesUpload = useFileStore((s) => s.setFilesUpload)
     const removeFileUpload = useFileStore((s) => s.removeFileUpload)
+    const setFilesUploadSuccess = useFileStore((s) => s.setFilesUploadSuccess)
 
     const handleCancelUpload = (id: string) => {
         removeFileUpload(id);
     };
 
+    function mapToItem(item: any): ItemProps {
+        const base = {
+          id: String(item.id),
+          name: item.name,
+          type: item.type,
+          parentId: item.parent_id ? String(item.parent_id) : undefined,
+          createdAt: new Date(item.created_at),
+          updatedAt: new Date(item.updated_at),
+        };
+    
+        if (item.type === "file") {
+    
+          return {
+            ...base,
+            hash: item.hash,
+            type: "file",
+            fileURL: `/files/${item.id}`,
+            fileType: item.mime_type,
+            fileSize: item.size,
+            extension: item.name.split('.').pop()
+          };
+        }
+    
+        return {
+          ...base,
+          type: "folder",
+          childrenCount: item.children_count ?? 0
+        };
+      }
+
     const startUpload = async () => {
 
         // console.log("Start Upload")
-        const { filesUpload } = useFileStore.getState();
 
-        for (const file of filesUpload) {
-            if (file.status === "pending") {
-                await uploadFileByID(file.id)
-            }
-        }
+        // for (const file of filesUpload) {
+        //     if (file.status === "pending") {
+        //         const res = await uploadFileByID(file.id)
+        //         console.log(res)
+        //     }
+        // }
+
+        // const tasks = filesUpload
+        //     .filter(file => file.status === "pending")
+        //     .map(file => uploadFileByID(file.id));
+
+        // const results = await Promise.all(tasks);
+
+        // console.log(results);
+
+        await uploadPendingFiles().then(res => {
+            const mapped = res.map(mapToItem);
+            setFilesUploadSuccess(mapped);
+            // console.log(res)
+        }).catch(err => {
+            console.log(err)
+        });
     }
 
     // const handleTestUpload = async () => {
