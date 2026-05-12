@@ -42,8 +42,8 @@ export default function FileUpload() {
           name: item.name,
           type: item.type,
           parentId: item.parent_id ? String(item.parent_id) : undefined,
-          createdAt: new Date(item.created_at),
-          updatedAt: new Date(item.updated_at),
+          createdAt: item.created_at ? new Date(item.created_at) : new Date(),
+          updatedAt: item.updated_at ? new Date(item.updated_at) : new Date(),
         };
     
         if (item.type === "file") {

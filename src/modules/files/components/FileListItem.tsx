@@ -36,7 +36,7 @@ export default function FileListItem({ item, onOpen }: Props) {
                 <img src={''} className="avatar" />
             </div>
 
-            <div className="file-list-col">{item.updatedAt.toDateString()}</div>
+            <div className="file-list-col">{item.updatedAt.toLocaleString()}</div>
             <div className="file-list-col">{!isFolder ? formatFileSize(item.fileSize) : "-"}</div>
 
             <div className="file-list-col action">

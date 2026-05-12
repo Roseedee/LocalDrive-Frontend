@@ -42,13 +42,10 @@ export default function ActionContent() {
 
     const handleDelete = () => {
         // window.alert("delete")
-
         if (selectedIds.length === 0) return;
 
         selectedIds.forEach(async (id) => {
-
             const deletedIds: string[] = [];
-
             await deleteItem(id).then((res) => {
                 // console.log(res)
                 if (res.file_id) {

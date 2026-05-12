@@ -60,6 +60,7 @@ export default function FilesPage() {
 
   // update itemList when upload success
   useEffect(() => {
+
     if (filesUploadSuccess.length > 0) {
 
       setItemList((prev) => {
@@ -72,16 +73,23 @@ export default function FilesPage() {
           i => !existingIds.has(i.id)
         );
 
+        const folders =
+          (prev || []).filter(i => i.type === "folder");
+
+        const files =
+          (prev || []).filter(i => i.type !== "folder");
 
         return [
+          ...folders,
           ...newItems,
-          ...(prev || [])
+          ...files
         ];
       });
 
       setFilesUploadSuccess([]);
+
     }
-    // console.log("Files Upload Success", itemList)
+
   }, [filesUploadSuccess]);
 
 
@@ -97,6 +105,7 @@ export default function FilesPage() {
     const fetchFiles = async () => {
       getItemsList().then((res) => {
         if (res.status) {
+          console.log(res);
           const mapped = res.items.map(mapToItem);
 
           setItemList(mapped);
