@@ -6,6 +6,7 @@ import { useFileStore } from '../store/file.store';
 import { deleteItem } from '../api/file.api';
 
 import CreateFolderPopup from './CreateFolderPopup';
+import FileNameEditPopup from './FileNameEditPopup';
 
 import createFolderIcon from '@/assets/icons-menu/create-folder.png';
 import createFileIcon from '@/assets/icons-menu/create-file.png';
@@ -18,11 +19,12 @@ import editIcon from '@/assets/icons-menu/edit.png';
 
 export default function ActionContent() {
     const selectedIds = useFileStore((s) => s.selectedIds);
-    const setFileIdsToDelete = useFileStore((s) => s.setFileIdsToDelete);
+    const setDeletedFileIds = useFileStore((s) => s.setDeletedFileIds);
     const [isSelect, setIsSelect] = useState<boolean>(selectedIds.length > 0);
 
     const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
-
+    const [isEditNameOpen, setIsEditNameOpen] = useState(false);
+    
     useEffect(() => {
         setIsSelect(selectedIds.length > 0);
     }, [selectedIds])
@@ -54,7 +56,7 @@ export default function ActionContent() {
             }).catch((err) => {
                 console.log(err)
             });
-            setFileIdsToDelete(deletedIds);
+            setDeletedFileIds(deletedIds);
         });
     }
 
@@ -67,7 +69,9 @@ export default function ActionContent() {
     }
 
     const handleEditName = async () => {
-        window.alert("edit name")
+        // window.alert("edit name")
+        if (selectedIds.length !== 1) return;
+        setIsEditNameOpen(true);
     }
 
 
@@ -75,6 +79,7 @@ export default function ActionContent() {
     return (
         <div className="action-content">
             <CreateFolderPopup open={isCreateFolderOpen} onClose={() => setIsCreateFolderOpen(false)} />
+            <FileNameEditPopup open={isEditNameOpen} onClose={() => setIsEditNameOpen(false)} />
 
             {selectedIds.length > 1 && (
                 <div className="primary-actions">

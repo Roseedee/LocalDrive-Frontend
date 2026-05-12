@@ -20,10 +20,12 @@ interface FileState {
 
   // Selection
   selectedIds: string[]
+  selectedItem: ItemProps | null
 
   selectOne: (id: string) => void
   toggleSelect: (id: string) => void
   clearSelection: () => void
+  setSelectedItem: (item: ItemProps) => void
 
   // Full view
   isFullViewOpen: boolean
@@ -32,8 +34,8 @@ interface FileState {
   openFullView: (file: FileModel) => void
   closeFullView: () => void
 
-  fileIdsToDelete: string[]
-  setFileIdsToDelete: (ids: string[]) => void
+  deletedFileIds: string[]
+  setDeletedFileIds: (ids: string[]) => void
 }
 
 export const useFileStore = create<FileState>((set) => ({
@@ -70,6 +72,7 @@ export const useFileStore = create<FileState>((set) => ({
 
   // Selection
   selectedIds: [],
+  selectedItem: null,
 
   selectOne: (id) =>
     set({
@@ -88,6 +91,7 @@ export const useFileStore = create<FileState>((set) => ({
     }),
 
   clearSelection: () => set({ selectedIds: [] }),
+  setSelectedItem(item) {set({selectedItem: item})},
 
   // Full view
   isFullViewOpen: false,
@@ -96,6 +100,6 @@ export const useFileStore = create<FileState>((set) => ({
   openFullView: (file) => set({ isFullViewOpen: true, activeFile: file }),
   closeFullView: () => set({ isFullViewOpen: false, activeFile: null }),
 
-  fileIdsToDelete: [],
-  setFileIdsToDelete: (ids) => set({ fileIdsToDelete: ids }),
+  deletedFileIds: [],
+  setDeletedFileIds: (ids) => set({ deletedFileIds: ids }),
 }))

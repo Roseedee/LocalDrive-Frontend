@@ -23,8 +23,10 @@ export default function FilesPage() {
   const updateActiveFile = useFileStore((s) => s.updateActiveFile);
   const filesUploadSuccess = useFileStore((s) => s.filesUploadSuccess);
   const setFilesUploadSuccess = useFileStore((s) => s.setFilesUploadSuccess);
-  const fileIdsToDelete = useFileStore((s) => s.fileIdsToDelete);
-  const setFileIdsToDelete = useFileStore((s) => s.setFileIdsToDelete);
+  const deletedFileIds = useFileStore((s) => s.deletedFileIds);
+  const setDeletedFileIds = useFileStore((s) => s.setDeletedFileIds);
+  const selectedIds = useFileStore((s) => s.selectedIds)
+  const setSelectedItem = useFileStore((s) => s.setSelectedItem)
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
 
@@ -57,6 +59,14 @@ export default function FilesPage() {
       childrenCount: item.children_count ?? 0
     };
   }
+
+  useEffect(() => {
+    if(selectedIds.length !== 1) return;
+
+    const tempItem = itemList?.filter((item) => item.id === selectedIds[0])[0] as ItemProps
+    setSelectedItem(tempItem)
+
+  }, [selectedIds])
 
   // update itemList when upload success
   useEffect(() => {
@@ -95,11 +105,11 @@ export default function FilesPage() {
 
   // update itemList when delete success
   useEffect(() => {
-    if (fileIdsToDelete.length > 0) {
-      setItemList((prev) => prev?.filter(i => !fileIdsToDelete.includes(i.id)) || null);
-      setFileIdsToDelete([]);
+    if (deletedFileIds.length > 0) {
+      setItemList((prev) => prev?.filter(i => !deletedFileIds.includes(i.id)) || null);
+      setDeletedFileIds([]);
     }
-  }, [fileIdsToDelete]);
+  }, [deletedFileIds]);
 
   useEffect(() => {
     const fetchFiles = async () => {

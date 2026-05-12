@@ -36,7 +36,7 @@ export default function FileFullViewPopup({ onPrevious, onNext }: FileFullViewPo
 
   return (
     <>
-      <Overlay open={isFullViewOpen} onClose={closeFullView}>
+      <Overlay open={isFullViewOpen} onClose={closeFullView} isFullScreen={true}>
         <div className="file-fullview-header">
           <div className="row between">
             <div className="file-path">

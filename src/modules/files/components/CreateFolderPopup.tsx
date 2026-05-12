@@ -36,7 +36,7 @@ export default function CreateFolderPopup({ open, onClose, parentId = null }: Cr
         }
 
         setLoading(true);
-        createFolder(folderName, parentId || null).then((res) => {
+        createFolder(folderName, parentId || null).then(() => {
             setFolderName("");
             onClose();
         }).catch(() => {
