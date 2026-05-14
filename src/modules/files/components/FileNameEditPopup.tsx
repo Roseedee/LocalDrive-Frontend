@@ -3,6 +3,10 @@ import { Overlay } from "./Overlay";
 
 import { useFileStore } from "../store/file.store";
 
+import { patchItem } from "../api/file.api";
+
+import { getFileExtension } from "../utils/getFileExtension";
+
 import closeIcon from '@/assets/icons/close-black.png';
 
 type FileNameEditPopupProps = {
@@ -16,15 +20,32 @@ export default function FileNameEditPopup({ open, onClose }: FileNameEditPopupPr
     const [fileName, setFileName] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [isFile, setIsFile] = useState(false)
 
     useEffect(() => {
         // console.log(selectedItem)
-        setFileName(selectedItem?.name || "")
+        setFileName(selectedItem?.name.split('.')[0] || "")
+        setIsFile(selectedItem?.type === 'file')
     }, [selectedItem])
 
     const handleEditName = async () => {
-        onClose();
-        setError("");
+        setLoading(true)
+        setError(null);
+
+        const ext = getFileExtension(selectedItem?.name || '');
+
+        const finalName = isFile && ext
+            ? `${fileName}.${ext}`
+            : fileName;
+
+        await patchItem(selectedItem?.id || '', { name: finalName }).then((res) => {
+            // console.log(res)
+            onClose();
+        }).catch((err) => {
+            console.error(err)
+            setError("ไม่สามารถแก้ไขชื่อไฟล์ได้")
+        })
+
         setLoading(false)
     }
 
@@ -56,7 +77,7 @@ export default function FileNameEditPopup({ open, onClose }: FileNameEditPopupPr
                     <button
                         className="confirm"
                         onClick={handleEditName}
-                        // disabled={loading || !!validateFolderName(folderName)}
+                    // disabled={loading || !!validateFolderName(folderName)}
                     >
                         {loading ? "กำลังสร้าง..." : "สร้าง"}
                     </button>

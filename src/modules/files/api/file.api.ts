@@ -139,3 +139,18 @@ export async function deleteItem(id: string) {
         return null;
     }
 }
+
+export async function patchItem(id: string, payload: Record<string, any>) {
+    try {
+
+        const res = await api.patch(`/files/${id}`, payload);
+
+        return res.data;
+
+    } catch (err) {
+
+        console.log('Error patching item:', err);
+
+        return null;
+    }
+}
