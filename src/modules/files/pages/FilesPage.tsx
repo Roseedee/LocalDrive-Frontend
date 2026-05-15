@@ -27,6 +27,8 @@ export default function FilesPage() {
   const setDeletedFileIds = useFileStore((s) => s.setDeletedFileIds);
   const selectedIds = useFileStore((s) => s.selectedIds)
   const setSelectedItem = useFileStore((s) => s.setSelectedItem)
+  const updatedItem = useFileStore((s) => s.updatedItem)
+  const setUpdatedItem = useFileStore((s) => s.setUpdatedItem)
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
 
@@ -112,10 +114,34 @@ export default function FilesPage() {
   }, [deletedFileIds]);
 
   useEffect(() => {
+    if(!updatedItem) return;
+
+    setItemList(prev => {
+
+    if (!prev) return prev;
+
+    return prev.map(item =>
+
+      item.id === updatedItem.id
+        ? {
+            ...item,
+            ...updatedItem
+          }
+        : item
+
+    );
+
+  });
+
+  setUpdatedItem(null);
+
+  }, [updatedItem])
+
+  useEffect(() => {
     const fetchFiles = async () => {
       getItemsList().then((res) => {
         if (res.status) {
-          console.log(res);
+          // console.log(res);
           const mapped = res.items.map(mapToItem);
 
           setItemList(mapped);

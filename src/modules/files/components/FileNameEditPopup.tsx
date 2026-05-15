@@ -16,6 +16,7 @@ type FileNameEditPopupProps = {
 
 export default function FileNameEditPopup({ open, onClose }: FileNameEditPopupProps) {
     const selectedItem = useFileStore((s) => s.selectedItem)
+    const setUpdatedItem = useFileStore((s) => s.setUpdatedItem)
 
     const [fileName, setFileName] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
@@ -29,24 +30,37 @@ export default function FileNameEditPopup({ open, onClose }: FileNameEditPopupPr
     }, [selectedItem])
 
     const handleEditName = async () => {
-        setLoading(true)
+        if (!selectedItem) return;
         setError(null);
-
+        
         const ext = getFileExtension(selectedItem?.name || '');
-
+        
         const finalName = isFile && ext
-            ? `${fileName}.${ext}`
-            : fileName;
+        ? `${fileName}.${ext}`
+        : fileName;
+        
+        try {
+            setLoading(true);
 
-        await patchItem(selectedItem?.id || '', { name: finalName }).then((res) => {
-            // console.log(res)
-            onClose();
-        }).catch((err) => {
-            console.error(err)
-            setError("ไม่สามารถแก้ไขชื่อไฟล์ได้")
-        })
+            const res = await patchItem(
+                selectedItem.id,
+                { name: finalName }
+            );
 
-        setLoading(false)
+            if (res.status) {
+                setUpdatedItem({
+                    ...selectedItem,
+                    name: finalName
+                });
+
+                onClose();
+            }
+        } catch (err) {
+            console.error(err);
+            setError("ไม่สามารถแก้ไขชื่อไฟล์ได้");
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (

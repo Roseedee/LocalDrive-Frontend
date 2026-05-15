@@ -10,6 +10,7 @@ export interface BaseItem {
 
   createdAt: Date;
   updatedAt: Date;
+  deletedAt?: Date;
 }
 
 export interface FileModel extends BaseItem {

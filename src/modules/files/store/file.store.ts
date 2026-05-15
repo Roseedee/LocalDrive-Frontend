@@ -34,8 +34,13 @@ interface FileState {
   openFullView: (file: FileModel) => void
   closeFullView: () => void
 
+  // deleted file
   deletedFileIds: string[]
   setDeletedFileIds: (ids: string[]) => void
+
+  // updated file
+  updatedItem: ItemProps | null
+  setUpdatedItem: (item: ItemProps | null) => void
 }
 
 export const useFileStore = create<FileState>((set) => ({
@@ -100,6 +105,11 @@ export const useFileStore = create<FileState>((set) => ({
   openFullView: (file) => set({ isFullViewOpen: true, activeFile: file }),
   closeFullView: () => set({ isFullViewOpen: false, activeFile: null }),
 
+  // deleted file
   deletedFileIds: [],
   setDeletedFileIds: (ids) => set({ deletedFileIds: ids }),
+
+  // updated file
+  updatedItem: null,
+  setUpdatedItem: (item) => set({updatedItem: item})
 }))
