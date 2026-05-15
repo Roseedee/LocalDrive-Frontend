@@ -38,33 +38,33 @@ export default function FileUpload() {
 
     function mapToItem(item: any): ItemProps {
         const base = {
-          id: String(item.id),
-          name: item.name,
-          type: item.type,
-          parentId: item.parent_id ? String(item.parent_id) : undefined,
-          createdAt: item.created_at ? new Date(item.created_at) : new Date(),
-          updatedAt: item.updated_at ? new Date(item.updated_at) : new Date(),
+            id: String(item.id),
+            name: item.name,
+            type: item.type,
+            parentId: item.parent_id ? String(item.parent_id) : undefined,
+            createdAt: item.created_at ? new Date(item.created_at) : new Date(),
+            updatedAt: item.updated_at ? new Date(item.updated_at) : new Date(),
         };
-    
+
         if (item.type === "file") {
-    
-          return {
-            ...base,
-            hash: item.hash,
-            type: "file",
-            fileURL: `/files/${item.id}`,
-            fileType: item.mime_type,
-            fileSize: item.size,
-            extension: item.name.split('.').pop()
-          };
+
+            return {
+                ...base,
+                hash: item.hash,
+                type: "file",
+                fileURL: `/files/${item.id}`,
+                fileType: item.mime_type,
+                fileSize: item.size,
+                extension: item.name.split('.').pop()
+            };
         }
-    
+
         return {
-          ...base,
-          type: "folder",
-          childrenCount: item.children_count ?? 0
+            ...base,
+            type: "folder",
+            childrenCount: item.children_count ?? 0
         };
-      }
+    }
 
     const startUpload = async () => {
 
@@ -86,9 +86,9 @@ export default function FileUpload() {
         // console.log(results);
 
         await uploadPendingFiles().then(res => {
+            console.log(res)
             const mapped = res.map(mapToItem);
             setFilesUploadSuccess(mapped);
-            // console.log(res)
         }).catch(err => {
             console.log(err)
         });

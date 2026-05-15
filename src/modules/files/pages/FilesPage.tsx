@@ -63,7 +63,7 @@ export default function FilesPage() {
   }
 
   useEffect(() => {
-    if(selectedIds.length !== 1) return;
+    if (selectedIds.length !== 1) return;
 
     const tempItem = itemList?.filter((item) => item.id === selectedIds[0])[0] as ItemProps
     setSelectedItem(tempItem)
@@ -74,9 +74,7 @@ export default function FilesPage() {
   useEffect(() => {
 
     if (filesUploadSuccess.length > 0) {
-
       setItemList((prev) => {
-
         const existingIds = new Set(
           prev?.map(i => i.id)
         );
@@ -85,23 +83,27 @@ export default function FilesPage() {
           i => !existingIds.has(i.id)
         );
 
-        const folders =
+        const prevFolders =
           (prev || []).filter(i => i.type === "folder");
 
-        const files =
+        const prevFiles =
           (prev || []).filter(i => i.type !== "folder");
 
+        const newFolders =
+          newItems.filter(i => i.type === "folder");
+
+        const newFiles =
+          newItems.filter(i => i.type !== "folder");
+
         return [
-          ...folders,
-          ...newItems,
-          ...files
+          ...newFolders,
+          ...prevFolders,
+          ...newFiles,
+          ...prevFiles
         ];
       });
-
       setFilesUploadSuccess([]);
-
     }
-
   }, [filesUploadSuccess]);
 
 
@@ -114,26 +116,26 @@ export default function FilesPage() {
   }, [deletedFileIds]);
 
   useEffect(() => {
-    if(!updatedItem) return;
+    if (!updatedItem) return;
 
     setItemList(prev => {
 
-    if (!prev) return prev;
+      if (!prev) return prev;
 
-    return prev.map(item =>
+      return prev.map(item =>
 
-      item.id === updatedItem.id
-        ? {
+        item.id === updatedItem.id
+          ? {
             ...item,
             ...updatedItem
           }
-        : item
+          : item
 
-    );
+      );
 
-  });
+    });
 
-  setUpdatedItem(null);
+    setUpdatedItem(null);
 
   }, [updatedItem])
 

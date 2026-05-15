@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import '../styles/createFolderPopup.css';
 import { Overlay } from "./Overlay";
+import type { ItemProps } from '../models/file.model';
+
+import { useFileStore } from '../store/file.store';
 
 import { validateFolderName } from '../utils/validateFolderName';
 import { createFolder } from '../api/file.api';
@@ -14,9 +17,40 @@ type CreateFolderPopupProps = {
 };
 
 export default function CreateFolderPopup({ open, onClose, parentId = null }: CreateFolderPopupProps) {
+    const setFilesUploadSuccess = useFileStore((s) => s.setFilesUploadSuccess)
     const [folderName, setFolderName] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+
+    function mapToItem(item: any): ItemProps {
+        const base = {
+            id: String(item.id),
+            name: item.name,
+            type: item.type,
+            parentId: item.parent_id ? String(item.parent_id) : undefined,
+            createdAt: item.created_at ? new Date(item.created_at) : new Date(),
+            updatedAt: item.updated_at ? new Date(item.updated_at) : new Date(),
+        };
+
+        if (item.type === "file") {
+
+            return {
+                ...base,
+                hash: item.hash,
+                type: "file",
+                fileURL: `/files/${item.id}`,
+                fileType: item.mime_type,
+                fileSize: item.size,
+                extension: item.name.split('.').pop()
+            };
+        }
+
+        return {
+            ...base,
+            type: "folder",
+            childrenCount: item.children_count ?? 0
+        };
+    }
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -35,15 +69,26 @@ export default function CreateFolderPopup({ open, onClose, parentId = null }: Cr
             return;
         }
 
-        setLoading(true);
-        createFolder(folderName, parentId || null).then(() => {
-            setFolderName("");
-            onClose();
-        }).catch(() => {
+        try {
+            setLoading(true);
+            const res = await createFolder(folderName, parentId || null)
+            // console.log(res)
+            if (res.status) {
+                setFolderName("");
+                const mapped = res.items.map(mapToItem);
+                setFilesUploadSuccess(mapped);
+                onClose();
+            }
+
+        } catch (err) {
+            console.error(err)
             setLoading(false);
             setError("เกิดข้อผิดพลาดในการสร้างโฟลเดอร์");
-        });
-
+        } finally {
+            setFolderName("");
+            setLoading(false)
+            onClose();
+        }
     };
 
     return (
