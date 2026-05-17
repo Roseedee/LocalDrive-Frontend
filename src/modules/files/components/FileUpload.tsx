@@ -31,6 +31,7 @@ export default function FileUpload() {
     const setFilesUpload = useFileStore((s) => s.setFilesUpload)
     const removeFileUpload = useFileStore((s) => s.removeFileUpload)
     const setFilesUploadSuccess = useFileStore((s) => s.setFilesUploadSuccess)
+    const currentFolderId = useFileStore((s) => s.currentFolderId)
 
     const handleCancelUpload = (id: string) => {
         removeFileUpload(id);
@@ -85,12 +86,12 @@ export default function FileUpload() {
 
         // console.log(results);
 
-        await uploadPendingFiles().then(res => {
-            console.log(res)
+        await uploadPendingFiles(currentFolderId).then(res => {
+            // console.log(res)
             const mapped = res.map(mapToItem);
             setFilesUploadSuccess(mapped);
         }).catch(err => {
-            console.log(err)
+            console.error(err)
         });
     }
 

@@ -36,7 +36,7 @@ export async function uploadFileByID(id: string) {
     }
 }
 
-export async function uploadPendingFiles() {
+export async function uploadPendingFiles(parent_id: string | null) {
     const { filesUpload, updateFileUpload } = useFileStore.getState();
 
     const pendingFiles = filesUpload.filter(
@@ -46,6 +46,10 @@ export async function uploadPendingFiles() {
     if (pendingFiles.length === 0) return;
 
     const formData = new FormData();
+
+    if(parent_id) {
+        formData.append("parent_id", parent_id)
+    }
 
     pendingFiles.forEach(f => {
 
@@ -120,9 +124,13 @@ export async function createFolder(name: string, parentId?: string | null) {
     }
 }
 
-export async function getItemsList() {
+export async function getItemsList(parent_id: string | null) {
     try {
-        const res = await api.get('/files/');
+        const res = await api.get('/files/', {
+            params: {
+                parent_id
+            }
+        });
         return res.data;
     } catch (err) {
         console.log('Error fetching current user:', err);

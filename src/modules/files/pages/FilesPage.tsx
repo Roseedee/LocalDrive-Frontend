@@ -13,8 +13,6 @@ import type { FileModel, ItemProps } from "../models/file.model";
 import FileFullViewPopup from "../components/FileFullViewPopup";
 
 export default function FilesPage() {
-
-
   const filesUpload = useFileStore((s) => s.filesUpload);
   const isGridView = useToolsStore((s) => s.isGridView);
   const showFileInfo = useToolsStore((s) => s.showFileInfo);
@@ -29,6 +27,9 @@ export default function FilesPage() {
   const setSelectedItem = useFileStore((s) => s.setSelectedItem)
   const updatedItem = useFileStore((s) => s.updatedItem)
   const setUpdatedItem = useFileStore((s) => s.setUpdatedItem)
+  const currentFolderId = useFileStore((s) => s.currentFolderId)
+  // const pathItems = useFileStore((s) => s.pathItems)
+  const pushPathItem = useFileStore((s) => s.pushPathItem)
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
 
@@ -141,21 +142,27 @@ export default function FilesPage() {
 
   useEffect(() => {
     const fetchFiles = async () => {
-      getItemsList().then((res) => {
+      setItemList([])
+      getItemsList(currentFolderId).then((res) => {
         if (res.status) {
           // console.log(res);
           const mapped = res.items.map(mapToItem);
-
+  
           setItemList(mapped);
         }
       })
     };
-
+    
     fetchFiles();
-  }, []);
+  }, [currentFolderId]);
+
 
   const handleOpen = (item: ItemProps) => {
     // window.alert("Open Item " + item.name)
+    if (item.type === "folder") {
+      pushPathItem(item)
+    }
+
     if (item.type === "file") {
       openFullView(item);
     }

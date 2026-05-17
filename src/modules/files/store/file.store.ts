@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import type { FileUploadModel } from "../models/itemUpload.model"
-import type { FileModel, ItemProps } from '../models/file.model'
+import type { FileModel, FolderModel, ItemProps } from '../models/file.model'
 
 interface FileState {
   // Upload
@@ -15,8 +15,17 @@ interface FileState {
   removeFileUpload: (id: string) => void
   setFilesUploadSuccess: (files: ItemProps[]) => void
 
-  currentPath: string
-  setCurrentPath: (path: string) => void
+  // Path
+  currentFolderId: string | null
+  pathItems: FolderModel[]
+
+  // setCurrentFolderId: (id: string | null) => void
+  setPathItems: (items: FolderModel[]) => void
+
+  pushPathItem: (item: FolderModel) => void
+  popPathItem: () => void
+  navigateToPathIndex: (index: number) => void
+  resetPathItems: () => void
 
   // Selection
   selectedIds: string[]
@@ -72,8 +81,33 @@ export const useFileStore = create<FileState>((set) => ({
       filesUpload: state.filesUpload.filter((f) => f.id !== id),
     })),
 
-  currentPath: "/",
-  setCurrentPath: (path) => set({ currentPath: path }),
+  // Path
+  currentFolderId: null,
+  pathItems: [],
+
+  // setCurrentFolderId: (id) => set({currentFolderId: id}),
+  setPathItems: (items) => set({pathItems: items, currentFolderId: items[items.length - 1].id}),
+
+  pushPathItem: (item) => set((state) => (
+    {pathItems: [...state.pathItems, item], currentFolderId: item.id})
+  ),
+  popPathItem: () => set((state) => {
+    const nextPath = state.pathItems.slice(0, -1);
+
+    return {
+      pathItems: nextPath,
+      currentFolderId: nextPath[nextPath.length - 1].id
+    }
+  }),
+  navigateToPathIndex: (index) => set((state) => {
+    const nextPath = state.pathItems.slice(0, index + 1);
+
+    return {
+      pathItems: nextPath,
+      currentFolderId: nextPath[nextPath.length - 1].id
+    }
+  }),
+  resetPathItems: () => set({pathItems: [], currentFolderId: null}),
 
   // Selection
   selectedIds: [],

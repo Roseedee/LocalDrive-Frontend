@@ -20,6 +20,8 @@ import editIcon from '@/assets/icons-menu/edit.png';
 export default function ActionContent() {
     const selectedIds = useFileStore((s) => s.selectedIds);
     const setDeletedFileIds = useFileStore((s) => s.setDeletedFileIds);
+    const currentFolderId = useFileStore((s) => s.currentFolderId)
+
     const [isSelect, setIsSelect] = useState<boolean>(selectedIds.length > 0);
 
     const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
@@ -78,7 +80,7 @@ export default function ActionContent() {
 
     return (
         <div className="action-content">
-            <CreateFolderPopup open={isCreateFolderOpen} onClose={() => setIsCreateFolderOpen(false)} />
+            <CreateFolderPopup open={isCreateFolderOpen} onClose={() => setIsCreateFolderOpen(false)} parentId={currentFolderId} />
             <FileNameEditPopup open={isEditNameOpen} onClose={() => setIsEditNameOpen(false)} />
 
             {selectedIds.length > 1 && (

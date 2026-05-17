@@ -1,13 +1,16 @@
+import { Fragment } from "react"
+import { Outlet } from 'react-router-dom';
 import './app.layout.css';
 
 import { useFileStore } from '@/modules/files/store/file.store';
 
-import { Outlet } from 'react-router-dom';
 import DeviceList from '@/modules/device/DeviceList';
 // import PinList from '@/modules/pins/PinList';
 import StorageInfo from '@/modules/storage/components/StorageInfo';
 import ToolbarActions from '@/modules/files/components/ToolbarActions';
 import ActionContent from '@/modules/files/components/ActionContent';
+
+import type { uploadState } from '@/modules/files/models/itemUpload.model';
 
 import appIcon from '@/assets/icons/app.png';
 import arrowIcon from '@/assets/icons/arrow.png';
@@ -19,10 +22,11 @@ import favoriteIcon from '@/assets/icons/favorite.png';
 import share1Icon from '@/assets/icons/share_1.png';
 import trashIcon from '@/assets/icons/bin.png';
 import searchIcon from '@/assets/icons/search.png';
-import type { uploadState } from '@/modules/files/models/itemUpload.model';
 
 export default function AppLayout() {
-  const { addManyFileUpload } = useFileStore();
+  const addManyFileUpload = useFileStore((s) => s.addManyFileUpload);
+  const pathItems = useFileStore((s) => s.pathItems)
+  const navigateToPathIndex = useFileStore((s) => s.navigateToPathIndex)
 
   const handleFileUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files ? Array.from(e.target.files) : [];
@@ -134,11 +138,27 @@ export default function AppLayout() {
         <div className="header">
           <div className="header-content">
             <div className="file-path">
-              <a href='/files'>เครื่องนี้</a>
-              /
-              <a href='/files/folder1'>โฟลเดอร์ 1</a>
-              /
-              <a href='/logout'>โฟลเดอร์ 2</a>
+              <a href="">เครื่องนี้</a>
+              {
+                pathItems.length !== 0 && (
+                  <span>/</span>
+                )
+              }
+              {
+                pathItems.map((item, index) => (
+                  <Fragment key={item.id}>
+
+                    {index > 0 && (
+                      <span>/</span>
+                    )}
+
+                    <a onClick={() => navigateToPathIndex(index)}>
+                      {item.name}
+                    </a>
+
+                  </Fragment>
+                ))
+              }
             </div>
             <div className="search-content">
               <div className="input-search-container">
