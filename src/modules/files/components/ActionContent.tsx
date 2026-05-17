@@ -19,6 +19,7 @@ import editIcon from '@/assets/icons-menu/edit.png';
 
 export default function ActionContent() {
     const selectedIds = useFileStore((s) => s.selectedIds);
+    const clearSelection = useFileStore((s) => s.clearSelection)
     const setDeletedFileIds = useFileStore((s) => s.setDeletedFileIds);
     const currentFolderId = useFileStore((s) => s.currentFolderId)
 
@@ -26,7 +27,8 @@ export default function ActionContent() {
 
     const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
     const [isEditNameOpen, setIsEditNameOpen] = useState(false);
-    
+    const [deleteLoading, setDeleteLoading] = useState(false)
+
     useEffect(() => {
         setIsSelect(selectedIds.length > 0);
     }, [selectedIds])
@@ -44,23 +46,48 @@ export default function ActionContent() {
         window.alert("download")
     }
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         // window.alert("delete")
+
         if (selectedIds.length === 0) return;
 
-        selectedIds.forEach(async (id) => {
+        try {
+
+            setDeleteLoading(true);
+
             const deletedIds: string[] = [];
-            await deleteItem(id).then((res) => {
-                // console.log(res)
-                if (res.file_id) {
-                    deletedIds.push(res.file_id);
-                }
-            }).catch((err) => {
-                console.log(err)
-            });
+
+            await Promise.all(
+
+                selectedIds.map(async (id) => {
+
+                    const res = await deleteItem(id);
+
+                    console.log(res);
+
+                    if (res.file_id) {
+                        deletedIds.push(res.file_id);
+                    }
+                })
+            );
+
             setDeletedFileIds(deletedIds);
-        });
+
+            clearSelection();
+
+        } catch (err) {
+
+            console.error(err);
+
+        } finally {
+
+            setDeleteLoading(false);
+        }
     }
+
+    useEffect(() => {
+        console.log(deleteLoading)
+    }, [deleteLoading])
 
     const handleFavorite = async () => {
         window.alert("favorite")
@@ -103,10 +130,10 @@ export default function ActionContent() {
                 )
             }
             <div className="selection-actions">
-                <button className="action-btn loading" onClick={handleDownload}>
+                <button className="action-btn" onClick={handleDownload}>
                     <img src={downloadIcon} alt="Download" />
                 </button>
-                <button className="action-btn" disabled={!isSelect} onClick={handleDelete}>
+                <button className={`action-btn ${deleteLoading ? 'loading' : ''}`} disabled={!isSelect} onClick={handleDelete}>
                     <img src={deleteIcon} alt="Delete" />
                 </button>
                 <button className="action-btn" disabled={!isSelect} onClick={handleFavorite}>
