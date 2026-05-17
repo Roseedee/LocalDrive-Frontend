@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 // import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { useFileStore } from "../store/file.store";
@@ -13,6 +14,10 @@ import type { FileModel, ItemProps } from "../models/file.model";
 import FileFullViewPopup from "../components/FileFullViewPopup";
 
 export default function FilesPage() {
+  const { id } = useParams();
+  const folderPublicID = id || null;
+  const navigate = useNavigate();
+
   const filesUpload = useFileStore((s) => s.filesUpload);
   const isGridView = useToolsStore((s) => s.isGridView);
   const showFileInfo = useToolsStore((s) => s.showFileInfo);
@@ -27,9 +32,9 @@ export default function FilesPage() {
   const setSelectedItem = useFileStore((s) => s.setSelectedItem)
   const updatedItem = useFileStore((s) => s.updatedItem)
   const setUpdatedItem = useFileStore((s) => s.setUpdatedItem)
-  const currentFolderId = useFileStore((s) => s.currentFolderId)
-  // const pathItems = useFileStore((s) => s.pathItems)
-  const pushPathItem = useFileStore((s) => s.pushPathItem)
+  const setCurrentFolderId = useFileStore((s) => s.setCurrentFolderId)
+  const setPathItems = useFileStore((s) => s.setPathItems)
+  // const pushPathItem = useFileStore((s) => s.pushPathItem)
 
   const [itemList, setItemList] = useState<ItemProps[] | null>(null);
 
@@ -47,6 +52,7 @@ export default function FilesPage() {
 
       return {
         ...base,
+        publicId: item.public_id,
         hash: item.hash,
         type: "file",
         fileURL: `/files/${item.id}`,
@@ -58,10 +64,39 @@ export default function FilesPage() {
 
     return {
       ...base,
+      publicId: item.public_id,
       type: "folder",
       childrenCount: item.children_count ?? 0
     };
   }
+
+  useEffect(() => {
+    let ignore = false;
+
+    const fetchFiles = async () => {
+      setItemList([]);
+
+      const res = await getItemsList(folderPublicID);
+      console.log(res)
+
+      if (!ignore && res.status) {
+        const mappedItemList = res.items.map(mapToItem);
+        const mappedItemPath = res.path.map(mapToItem);
+
+
+        setItemList(mappedItemList);
+        setPathItems(mappedItemPath)
+        setCurrentFolderId(res.parent_id ?? null);
+
+      }
+    };
+
+    fetchFiles();
+
+    return () => {
+      ignore = true;
+    };
+  }, [folderPublicID]);
 
   useEffect(() => {
     if (selectedIds.length !== 1) return;
@@ -140,27 +175,12 @@ export default function FilesPage() {
 
   }, [updatedItem])
 
-  useEffect(() => {
-    const fetchFiles = async () => {
-      setItemList([])
-      getItemsList(currentFolderId).then((res) => {
-        if (res.status) {
-          // console.log(res);
-          const mapped = res.items.map(mapToItem);
-  
-          setItemList(mapped);
-        }
-      })
-    };
-    
-    fetchFiles();
-  }, [currentFolderId]);
-
 
   const handleOpen = (item: ItemProps) => {
     // window.alert("Open Item " + item.name)
-    if (item.type === "folder") {
-      pushPathItem(item)
+    if (item.type === "folder" && item.publicId) {
+      navigate(`/files/${encodeURIComponent(item.publicId)}`)
+      return;
     }
 
     if (item.type === "file") {

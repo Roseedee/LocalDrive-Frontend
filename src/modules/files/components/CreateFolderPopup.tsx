@@ -36,6 +36,7 @@ export default function CreateFolderPopup({ open, onClose, parentId = null }: Cr
 
             return {
                 ...base,
+                publicId: item.public_id,
                 hash: item.hash,
                 type: "file",
                 fileURL: `/files/${item.id}`,
@@ -48,6 +49,7 @@ export default function CreateFolderPopup({ open, onClose, parentId = null }: Cr
         return {
             ...base,
             type: "folder",
+            publicId: item.public_id,
             childrenCount: item.children_count ?? 0
         };
     }
@@ -72,7 +74,7 @@ export default function CreateFolderPopup({ open, onClose, parentId = null }: Cr
         try {
             setLoading(true);
             const res = await createFolder(folderName, parentId || null)
-            // console.log(res)
+            console.log(res)
             if (res.status) {
                 setFolderName("");
                 const mapped = res.items.map(mapToItem);

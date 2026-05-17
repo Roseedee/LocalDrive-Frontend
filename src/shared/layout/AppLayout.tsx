@@ -26,7 +26,7 @@ import searchIcon from '@/assets/icons/search.png';
 export default function AppLayout() {
   const addManyFileUpload = useFileStore((s) => s.addManyFileUpload);
   const pathItems = useFileStore((s) => s.pathItems)
-  const navigateToPathIndex = useFileStore((s) => s.navigateToPathIndex)
+  // const navigateToPathIndex = useFileStore((s) => s.navigateToPathIndex)
 
   const handleFileUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files ? Array.from(e.target.files) : [];
@@ -138,7 +138,7 @@ export default function AppLayout() {
         <div className="header">
           <div className="header-content">
             <div className="file-path">
-              <a href="">เครื่องนี้</a>
+              <a href="/files">เครื่องนี้</a>
               {
                 pathItems.length !== 0 && (
                   <span>/</span>
@@ -152,7 +152,7 @@ export default function AppLayout() {
                       <span>/</span>
                     )}
 
-                    <a onClick={() => navigateToPathIndex(index)}>
+                    <a href={`/files/${item.publicId}`}>
                       {item.name}
                     </a>
 

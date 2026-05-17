@@ -19,13 +19,13 @@ interface FileState {
   currentFolderId: string | null
   pathItems: FolderModel[]
 
-  // setCurrentFolderId: (id: string | null) => void
+  setCurrentFolderId: (id: string | null) => void
   setPathItems: (items: FolderModel[]) => void
 
-  pushPathItem: (item: FolderModel) => void
-  popPathItem: () => void
-  navigateToPathIndex: (index: number) => void
-  resetPathItems: () => void
+  // pushPathItem: (item: FolderModel) => void
+  // popPathItem: () => void
+  // navigateToPathIndex: (index: number) => void
+  // resetPathItems: () => void
 
   // Selection
   selectedIds: string[]
@@ -84,30 +84,30 @@ export const useFileStore = create<FileState>((set) => ({
   // Path
   currentFolderId: null,
   pathItems: [],
+  
+  setCurrentFolderId: (id) => set({currentFolderId: id}),
+  setPathItems: (items) => set({pathItems: items}),
 
-  // setCurrentFolderId: (id) => set({currentFolderId: id}),
-  setPathItems: (items) => set({pathItems: items, currentFolderId: items[items.length - 1].id}),
+  // pushPathItem: (item) => set((state) => (
+  //   {pathItems: [...state.pathItems, item], currentFolderId: item.id})
+  // ),
+  // popPathItem: () => set((state) => {
+  //   const nextPath = state.pathItems.slice(0, -1);
 
-  pushPathItem: (item) => set((state) => (
-    {pathItems: [...state.pathItems, item], currentFolderId: item.id})
-  ),
-  popPathItem: () => set((state) => {
-    const nextPath = state.pathItems.slice(0, -1);
+  //   return {
+  //     pathItems: nextPath,
+  //     currentFolderId: nextPath[nextPath.length - 1].id
+  //   }
+  // }),
+  // navigateToPathIndex: (index) => set((state) => {
+  //   const nextPath = state.pathItems.slice(0, index + 1);
 
-    return {
-      pathItems: nextPath,
-      currentFolderId: nextPath[nextPath.length - 1].id
-    }
-  }),
-  navigateToPathIndex: (index) => set((state) => {
-    const nextPath = state.pathItems.slice(0, index + 1);
-
-    return {
-      pathItems: nextPath,
-      currentFolderId: nextPath[nextPath.length - 1].id
-    }
-  }),
-  resetPathItems: () => set({pathItems: [], currentFolderId: null}),
+  //   return {
+  //     pathItems: nextPath,
+  //     currentFolderId: nextPath[nextPath.length - 1].id
+  //   }
+  // }),
+  // resetPathItems: () => set({pathItems: [], currentFolderId: null}),
 
   // Selection
   selectedIds: [],

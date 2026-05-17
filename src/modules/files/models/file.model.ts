@@ -2,6 +2,7 @@ export type ItemType = "file" | "folder";
 
 export interface BaseItem {
   id: string;
+  publicId?: string;
   name: string;
   type: ItemType;
 
