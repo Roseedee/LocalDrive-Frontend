@@ -1,17 +1,26 @@
-import { Navigate, Outlet } from "react-router-dom"
-import { useAuthStore } from "../store/auth.store"
-import { logout } from "@/shared/lib/axios"
+import { Navigate, Outlet } from "react-router-dom";
 
-import "@/shared/styles/loading.css"
+import { useAuthStore } from "../store/auth.store";
+
+import "@/shared/styles/loading.css";
 
 export default function ProtectedLayout() {
-  const user_id = useAuthStore(s => s.user_id)
-  const loading = useAuthStore(s => s.loading)
-  const isSessionExpired = useAuthStore(s => s.isSessionExpired)
 
-  if (!loading && (isSessionExpired || !user_id)) {
-    logout();
-    // return <Navigate to="/init" replace />
+  const user_id =
+    useAuthStore(s => s.user_id);
+
+  const loading =
+    useAuthStore(s => s.loading);
+
+  const isSessionExpired =
+    useAuthStore(s => s.isSessionExpired);
+
+  const unauthorized =
+    !loading &&
+    (isSessionExpired || !user_id);
+
+  if (unauthorized) {
+    return <Navigate to="/init" replace />;
   }
 
   return (
@@ -21,9 +30,13 @@ export default function ProtectedLayout() {
       {loading && (
         <div className="loading-overlay">
           <div className="spinner"></div>
-          <span className="loading-text">กำลังโหลด</span>
+
+          <span className="loading-text">
+            กำลังโหลด
+          </span>
         </div>
       )}
     </>
-  )
+  );
+
 }

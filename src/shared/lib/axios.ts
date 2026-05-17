@@ -7,86 +7,231 @@ export const api = axios.create({
   withCredentials: true
 });
 
+// =========================
 // REQUEST
-api.interceptors.request.use((config) => {
-  const { isSessionExpired } = useAuthStore.getState();
+// =========================
 
+api.interceptors.request.use((config) => {
+
+  const { isSessionExpired } =
+    useAuthStore.getState();
+
+  // block request ถ้า session หมดแล้ว
   if (isSessionExpired) {
-    return Promise.reject(new Error("Session expired"));
+    return Promise.reject(
+      new Error("Session expired")
+    );
   }
 
-  const token = localStorage.getItem("accessToken");
+  const token =
+    localStorage.getItem("accessToken");
 
   if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization =
+      `Bearer ${token}`;
   }
 
   return config;
+
 });
 
+// =========================
+// REFRESH CONTROL
+// =========================
+
+let isRefreshing = false;
+
+let pendingRequests: Array<
+  (token: string) => void
+> = [];
+
+const processQueue = (token: string) => {
+
+  pendingRequests.forEach((callback) => {
+    callback(token);
+  });
+
+  pendingRequests = [];
+
+};
+
+// =========================
+// LOGOUT
+// =========================
+
+export const logout = async () => {
+
+  try {
+
+    await api.post("/auth/logout");
+
+  } catch { }
+
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("device_uuid");
+
+  useAuthStore
+    .getState()
+    .expireSession();
+
+};
+
+// =========================
 // RESPONSE
+// =========================
+
 api.interceptors.response.use(
+
   (res) => res,
+
   async (err) => {
+
     const original = err.config;
-    const status = err.response?.status;
 
-    if (!original) return Promise.reject(err);
+    // network error
+    // backend offline
+    if (!err.response) {
 
-    // ถ้า refresh ยังพัง → logout
-    if (original.url?.includes("/auth/refresh")) {
-      useAuthStore.getState().expireSession();
-      localStorage.removeItem("accessToken");
-      window.location.replace("/init");
+      console.error(
+        "Network error or backend offline"
+      );
+
+      return Promise.reject(err);
+
+    }
+
+    const status = err.response.status;
+
+    if (!original) {
       return Promise.reject(err);
     }
 
-    // 401 → try refresh (ครั้งเดียว)
-    if (status === 401 && !original._retry) {
+    // =========================
+    // REFRESH FAILED
+    // =========================
+
+    if (
+      original.url?.includes("/auth/refresh") &&
+      (status === 401 || status === 403)
+    ) {
+
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("device_uuid");
+
+      useAuthStore
+        .getState()
+        .expireSession();
+
+      return Promise.reject(err);
+
+    }
+
+    // =========================
+    // ACCESS TOKEN EXPIRED
+    // =========================
+
+    if (
+      status === 401 &&
+      !original._retry
+    ) {
+
       original._retry = true;
 
+      // รอ refresh ตัวเดียว
+      if (isRefreshing) {
+
+        return new Promise((resolve) => {
+
+          pendingRequests.push((token) => {
+
+            original.headers.Authorization =
+              `Bearer ${token}`;
+
+            resolve(api(original));
+
+          });
+
+        });
+
+      }
+
+      isRefreshing = true;
+
       try {
+
         const res = await axios.post(
           "http://localhost:5000/api/auth/refresh",
           {},
-          { withCredentials: true }
+          {
+            withCredentials: true
+          }
         );
 
         const data = res.data;
 
-        localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("device_uuid", data.device.uuid);
+        localStorage.setItem(
+          "accessToken",
+          data.accessToken
+        );
 
-        original.headers.Authorization = `Bearer ${data.accessToken}`;
+        localStorage.setItem(
+          "device_uuid",
+          data.device.uuid
+        );
+
+        processQueue(data.accessToken);
+
+        original.headers.Authorization =
+          `Bearer ${data.accessToken}`;
 
         return api(original);
 
-      } catch {
-        useAuthStore.getState().expireSession();
-        localStorage.removeItem("accessToken");
-        window.location.replace("/init");
+      } catch (refreshError) {
+
+        localStorage.removeItem(
+          "accessToken"
+        );
+
+        localStorage.removeItem(
+          "device_uuid"
+        );
+
+        useAuthStore
+          .getState()
+          .expireSession();
+
+        return Promise.reject(refreshError);
+
+      } finally {
+
+        isRefreshing = false;
+
       }
+
     }
 
-    // 403 → logout
+    // =========================
+    // FORBIDDEN
+    // =========================
+
     if (status === 403) {
-      useAuthStore.getState().expireSession();
-      localStorage.removeItem("accessToken");
-      window.location.replace("/init");
+
+      localStorage.removeItem(
+        "accessToken"
+      );
+
+      localStorage.removeItem(
+        "device_uuid"
+      );
+
+      useAuthStore
+        .getState()
+        .expireSession();
+
     }
 
     return Promise.reject(err);
+
   }
+
 );
-
-// LOGOUT
-// อาจจะมีการใช้รวมกับปุ่ม Logout ในหน้า FilesPage หรือหน้าอื่นๆ ที่ต้องการให้ผู้ใช้สามารถออกจากระบบได้
-export const logout = async () => {
-  try {
-    await api.post("/auth/logout");
-  } catch {}
-
-  useAuthStore.getState().expireSession();
-  localStorage.removeItem("accessToken");
-  window.location.replace("/init");
-};

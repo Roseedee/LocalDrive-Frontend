@@ -1,10 +1,20 @@
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from "react-router-dom";
+
+import { useAuthStore } from "@/modules/auth/store/auth.store";
 
 export default function AuthLayout() {
-  return (
-    <div className="auth-layout">
-        {/* from auth layout */}
-        <Outlet />
-    </div>
-  );
+
+  const user_id = useAuthStore(s => s.user_id);
+  const loading = useAuthStore(s => s.loading);
+
+  if (loading) {
+    return null;
+  }
+
+  if (user_id) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <Outlet />;
+
 }

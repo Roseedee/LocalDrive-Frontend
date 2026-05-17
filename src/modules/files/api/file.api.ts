@@ -124,11 +124,11 @@ export async function createFolder(name: string, parentId?: string | null) {
     }
 }
 
-export async function getItemsList(parent_id: string | null) {
+export async function getItemsList(public_id: string | null) {
     try {
         const res = await api.get('/files/', {
             params: {
-                parent_id
+                public_id
             }
         });
         return res.data;

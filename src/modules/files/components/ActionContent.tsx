@@ -85,10 +85,6 @@ export default function ActionContent() {
         }
     }
 
-    useEffect(() => {
-        console.log(deleteLoading)
-    }, [deleteLoading])
-
     const handleFavorite = async () => {
         window.alert("favorite")
     }
