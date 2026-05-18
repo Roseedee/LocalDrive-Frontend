@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import type { KeyboardEvent } from 'react';
 import '../styles/createFolderPopup.css';
 import { Overlay } from "./Overlay";
 import type { ItemProps } from '../models/file.model';
@@ -18,6 +19,8 @@ type CreateFolderPopupProps = {
 
 export default function CreateFolderPopup({ open, onClose, parentId = null }: CreateFolderPopupProps) {
     const setFilesUploadSuccess = useFileStore((s) => s.setFilesUploadSuccess)
+
+    const inputRef = useRef<HTMLInputElement>(null)
     const [folderName, setFolderName] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -54,6 +57,12 @@ export default function CreateFolderPopup({ open, onClose, parentId = null }: Cr
         };
     }
 
+    useEffect(() => {
+        if(open) {
+            inputRef.current?.focus();
+        }
+    }, [open])
+
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
 
@@ -62,6 +71,12 @@ export default function CreateFolderPopup({ open, onClose, parentId = null }: Cr
         setFolderName(value);
         setError(validateFolderName(value));
     };
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if(e.key === "Enter") {
+            handleCreateFolder();
+        }
+    }
 
     const handleCreateFolder = async () => {
         const err = validateFolderName(folderName);
@@ -105,10 +120,12 @@ export default function CreateFolderPopup({ open, onClose, parentId = null }: Cr
 
                 <div className="input-container-popup">
                     <input
+                        ref={inputRef}
                         type="text"
                         id="folder-name"
                         placeholder="Enter folder name"
                         value={folderName}
+                        onKeyDown={handleKeyDown}
                         onChange={onInputChange}
                         disabled={loading}
                     />

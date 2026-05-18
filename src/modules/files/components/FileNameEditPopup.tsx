@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import type { KeyboardEvent } from "react"
 import { Overlay } from "./Overlay";
 
 import { useFileStore } from "../store/file.store";
@@ -18,6 +19,7 @@ export default function FileNameEditPopup({ open, onClose }: FileNameEditPopupPr
     const selectedItem = useFileStore((s) => s.selectedItem)
     const setUpdatedItem = useFileStore((s) => s.setUpdatedItem)
 
+    const inputRef = useRef<HTMLInputElement>(null);
     const [fileName, setFileName] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -28,6 +30,18 @@ export default function FileNameEditPopup({ open, onClose }: FileNameEditPopupPr
         setFileName(selectedItem?.name.split('.')[0] || "")
         setIsFile(selectedItem?.type === 'file')
     }, [selectedItem])
+
+    useEffect(() => {
+        if(open) {
+            inputRef.current?.focus();
+        }
+    }, [open])
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if(e.key === "Enter") {
+            handleEditName();
+        }
+    }
 
     const handleEditName = async () => {
         if (!selectedItem) return;
@@ -75,10 +89,12 @@ export default function FileNameEditPopup({ open, onClose }: FileNameEditPopupPr
 
                 <div className="input-container-popup">
                     <input
+                        ref={inputRef}
                         type="text"
                         id="file-name"
                         placeholder="Enter file name"
                         value={fileName}
+                        onKeyDown={handleKeyDown}
                         onChange={(e) => setFileName(e.target.value)}
                     />
                     {error && <p className="error-message">{error}</p>}
@@ -93,7 +109,7 @@ export default function FileNameEditPopup({ open, onClose }: FileNameEditPopupPr
                         onClick={handleEditName}
                     // disabled={loading || !!validateFolderName(folderName)}
                     >
-                        {loading ? "กำลังสร้าง..." : "สร้าง"}
+                        {loading ? "กำลังแก้ไข..." : "แก้ไข"}
                     </button>
                 </div>
             </div>
