@@ -3,7 +3,7 @@ import '../styles/actionContent.css'
 
 import { useFileStore } from '../store/file.store';
 
-import { deleteItem } from '../api/file.api';
+import { deleteItem, favorite } from '../api/file.api';
 
 import CreateFolderPopup from './CreateFolderPopup';
 import FileNameEditPopup from './FileNameEditPopup';
@@ -63,7 +63,7 @@ export default function ActionContent() {
 
                     const res = await deleteItem(id);
 
-                    console.log(res);
+                    // console.log(res);
 
                     if (res.file_id) {
                         deletedIds.push(res.file_id);
@@ -86,7 +86,14 @@ export default function ActionContent() {
     }
 
     const handleFavorite = async () => {
-        window.alert("favorite")
+        // window.alert("favorite")
+        if(selectedIds.length !== 1) return;
+        try {
+            const res = await favorite(selectedIds[0])
+            console.log(res);
+        }catch (err) {
+            console.error(err)
+        }
     }
 
     const handleShare = async () => {

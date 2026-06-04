@@ -162,3 +162,13 @@ export async function patchItem(id: string, payload: Record<string, any>) {
         return null;
     }
 }
+
+export async function favorite(id: string) {
+    try {
+        const res = await api.post(`/files/${id}/favorite`);
+        return res.data;
+    } catch(err) {
+        console.log(err);
+        return null;
+    }
+}

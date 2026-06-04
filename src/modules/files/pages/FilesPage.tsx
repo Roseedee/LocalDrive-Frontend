@@ -77,7 +77,7 @@ export default function FilesPage() {
       setItemList([]);
 
       const res = await getItemsList(folderPublicID);
-      console.log(res)
+      // console.log(res)
 
       if (!ignore && res.status) {
         const mappedItemList = res.items.map(mapToItem);
