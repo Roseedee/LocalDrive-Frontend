@@ -14,16 +14,20 @@ import createFileIcon from '@/assets/icons-menu/create-file.png';
 import downloadIcon from '@/assets/icons-menu/downloads.png';
 import deleteIcon from '@/assets/icons-menu/bin.png';
 import favoriteIcon from '@/assets/icons-menu/favorite.png';
+import favoriteFillIcon from '@/assets/icons-menu/favorite-fill.png';
 import shareIcon from '@/assets/icons-menu/send.png';
 import editIcon from '@/assets/icons-menu/edit.png';
 
 export default function ActionContent() {
     const selectedIds = useFileStore((s) => s.selectedIds);
+    const selectedItem = useFileStore((s) => s.selectedItem)
+    const setSelectedItem = useFileStore((s) => s.setSelectedItem)
+    const setUpdatedItem = useFileStore((s) => s.setUpdatedItem)
     const clearSelection = useFileStore((s) => s.clearSelection)
     const setDeletedFileIds = useFileStore((s) => s.setDeletedFileIds);
     const currentFolderId = useFileStore((s) => s.currentFolderId)
 
-    const [isSelect, setIsSelect] = useState<boolean>(selectedIds.length > 0);
+    const [isSelect, setIsSelect] = useState<boolean>(selectedIds.length > 0);;
 
     const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
     const [isEditNameOpen, setIsEditNameOpen] = useState(false);
@@ -91,6 +95,10 @@ export default function ActionContent() {
         try {
             const res = await favorite(selectedIds[0])
             console.log(res);
+            if (selectedItem) {
+                setUpdatedItem({ ...selectedItem, isFavorite: res.favorite_id || false });
+                setSelectedItem({ ...selectedItem, isFavorite: res.favorite_id || false });
+            }
         }catch (err) {
             console.error(err)
         }
@@ -140,7 +148,7 @@ export default function ActionContent() {
                     <img src={deleteIcon} alt="Delete" />
                 </button>
                 <button className="action-btn" disabled={!isSelect} onClick={handleFavorite}>
-                    <img src={favoriteIcon} alt="Favorite" />
+                    <img src={selectedItem?.isFavorite ? favoriteFillIcon : favoriteIcon} alt="Favorite" />
                 </button>
                 <button className="action-btn" disabled={!isSelect} onClick={handleShare}>
                     <img src={shareIcon} alt="Share" />

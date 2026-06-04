@@ -44,6 +44,7 @@ export default function FilesPage() {
       name: item.name,
       type: item.type,
       parentId: item.parent_id ? String(item.parent_id) : undefined,
+      isFavorite: item.is_favorite ?? false,
       createdAt: new Date(item.created_at),
       updatedAt: new Date(item.updated_at),
     };
@@ -77,7 +78,7 @@ export default function FilesPage() {
       setItemList([]);
 
       const res = await getItemsList(folderPublicID);
-      // console.log(res)
+      console.log(res)
 
       if (!ignore && res.status) {
         const mappedItemList = res.items.map(mapToItem);

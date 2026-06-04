@@ -8,6 +8,7 @@ export interface BaseItem {
 
   parentId?: string;      // folder ที่อยู่
   path?: string;          // optional ถ้าใช้ full path
+  isFavorite?: boolean;
 
   createdAt: Date;
   updatedAt: Date;
