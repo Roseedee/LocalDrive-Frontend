@@ -69,6 +69,10 @@ a {
     align-items: center;
 }
 
+.end {
+    justify-content: flex-end;
+}
+
 .between {
     justify-content: space-between;
     align-items: center;

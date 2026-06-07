@@ -111,7 +111,7 @@ export default function CreateFolderPopup({ open, onClose, parentId = null }: Cr
     return (
         <Overlay open={open} onClose={onClose}>
             <div className="overlay-card">
-                <div className="row between">
+                <div className="overlay-card-header">
                     <h3>Create Folder</h3>
                     <button onClick={onClose} className="popup-close-btn">
                         <img src={closeIcon} alt="Close" />

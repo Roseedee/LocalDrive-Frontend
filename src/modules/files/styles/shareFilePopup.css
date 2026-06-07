@@ -1,0 +1,149 @@
+.allowed-user-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+}
+
+.allowed-user-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+    transition: 0.3s;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 5px 8px;
+}
+
+.allowed-user-item:hover {
+    background-color: #f0f0f0;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    padding: 2px;
+    border: 1px solid #90B2DF;
+    border-radius: 50%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info {
+    width: 0;
+    flex-grow: 1;
+}
+
+.user-fullname {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-info .tag {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.permission-tag {
+    height: 48px;
+    margin-left: auto;
+    /* background-color: #300935; */
+    display: flex;
+    align-items: center;
+}
+
+.permission-tag span {
+    white-space: nowrap;
+    font-size: smaller;
+    color: #AEAEAE;
+}
+
+.permission-tag select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: smaller;
+    text-align: right;
+}
+
+.general-access {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 10px;
+}
+
+.permission-icon {
+    background-color: #FFE3E3;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.permission-icon img {
+    width: 20px;
+    height: 20px;
+}
+
+.permission-description {
+    width: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;   
+    gap: 2px; 
+}
+
+.permission-select {
+    border: none;
+    outline: none;
+    background: transparent;
+
+    display: inline-block;
+    width: max-content;
+    width: fit-content;
+}
+
+.permission-text {
+    padding-left: 3px;
+    font-size: smaller;
+    color: #AEAEAE;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-container-popup {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+button.btn-copy-link {
+    background: white;
+    padding: 8px;
+    color: #90B2DF;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+
+    img {
+        width: 16px;
+        height: 16px;
+    }
+}

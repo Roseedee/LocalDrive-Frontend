@@ -6,6 +6,7 @@ import { useFileStore } from '../store/file.store';
 import { deleteItem, favorite } from '../api/file.api';
 
 import CreateFolderPopup from './CreateFolderPopup';
+import ShareFilePopup from './ShareFilePopup';
 import FileNameEditPopup from './FileNameEditPopup';
 
 import createFolderIcon from '@/assets/icons-menu/create-folder.png';
@@ -27,14 +28,17 @@ export default function ActionContent() {
     const setDeletedFileIds = useFileStore((s) => s.setDeletedFileIds);
     const currentFolderId = useFileStore((s) => s.currentFolderId)
 
-    const [isSelect, setIsSelect] = useState<boolean>(selectedIds.length > 0);;
+    const [isSelect, setIsSelect] = useState<boolean>(selectedIds.length > 0);
+    const [isSelectedMultiple, setIsSelectedMultiple] = useState<boolean>(selectedIds.length > 1);
 
     const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
+    const [isShareFileOpen, setIsShareFileOpen] = useState(false);
     const [isEditNameOpen, setIsEditNameOpen] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false)
 
     useEffect(() => {
         setIsSelect(selectedIds.length > 0);
+        setIsSelectedMultiple(selectedIds.length > 1);
     }, [selectedIds])
 
     const handleCreateFolder = () => {
@@ -94,7 +98,7 @@ export default function ActionContent() {
         if(selectedIds.length !== 1) return;
         try {
             const res = await favorite(selectedIds[0])
-            console.log(res);
+            // console.log(res);
             if (selectedItem) {
                 setUpdatedItem({ ...selectedItem, isFavorite: res.favorite_id || false });
                 setSelectedItem({ ...selectedItem, isFavorite: res.favorite_id || false });
@@ -105,7 +109,9 @@ export default function ActionContent() {
     }
 
     const handleShare = async () => {
-        window.alert("share")
+        // window.alert("share")
+        if(selectedIds.length === 0) return;
+        setIsShareFileOpen(true);
     }
 
     const handleEditName = async () => {
@@ -120,6 +126,7 @@ export default function ActionContent() {
         <div className="action-content">
             <CreateFolderPopup open={isCreateFolderOpen} onClose={() => setIsCreateFolderOpen(false)} parentId={currentFolderId} />
             <FileNameEditPopup open={isEditNameOpen} onClose={() => setIsEditNameOpen(false)} />
+            <ShareFilePopup open={isShareFileOpen} onClose={() => setIsShareFileOpen(false)} />
 
             {selectedIds.length > 1 && (
                 <div className="primary-actions">
@@ -127,7 +134,7 @@ export default function ActionContent() {
                 </div>
             )}
             {
-                (!(selectedIds.length > 1)) && (
+                (!isSelectedMultiple) && (
                     <div className="primary-actions">
                         <button className="action-btn" onClick={handleCreateFolder}>
                             <img src={createFolderIcon} alt="Create Folder" />
@@ -147,13 +154,13 @@ export default function ActionContent() {
                 <button className={`action-btn ${deleteLoading ? 'loading' : ''}`} disabled={!isSelect} onClick={handleDelete}>
                     <img src={deleteIcon} alt="Delete" />
                 </button>
-                <button className="action-btn" disabled={!isSelect} onClick={handleFavorite}>
-                    <img src={selectedItem?.isFavorite ? favoriteFillIcon : favoriteIcon} alt="Favorite" />
+                <button className="action-btn" disabled={!isSelect || isSelectedMultiple} onClick={handleFavorite}>
+                    <img src={ !isSelect || isSelectedMultiple ? favoriteIcon : selectedItem?.isFavorite ? favoriteFillIcon : favoriteIcon} alt="Favorite" />
                 </button>
                 <button className="action-btn" disabled={!isSelect} onClick={handleShare}>
                     <img src={shareIcon} alt="Share" />
                 </button>
-                <button className="action-btn" disabled={!isSelect} onClick={handleEditName}>
+                <button className="action-btn" disabled={!isSelect || isSelectedMultiple} onClick={handleEditName}>
                     <img src={editIcon} alt="Edit" />
                 </button>
             </div>

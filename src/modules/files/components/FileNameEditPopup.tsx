@@ -80,7 +80,7 @@ export default function FileNameEditPopup({ open, onClose }: FileNameEditPopupPr
     return (
         <Overlay open={open} onClose={onClose}>
             <div className="overlay-card">
-                <div className="row between">
+                <div className="overlay-card-header">
                     <h3>แก้ไขชื่อไฟล์</h3>
                     <button onClick={onClose} className="popup-close-btn">
                         <img src={closeIcon} alt="Close" />
