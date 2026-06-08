@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Overlay } from "./Overlay";
 
 import '../styles/shareFilePopup.css'
 
+import { getUserSuggestion } from "../api/file.api";
+
 import closeIcon from '@/assets/icons/close-black.png';
-import clossWhiteIcon from '@/assets/icons/close.png';
 import lockIcon from '@/assets/icons/lock.png';
 import linkIcon from '@/assets/icons/link.png';
 import imgTest from '@/assets/test/test1.jpg';
@@ -17,9 +18,30 @@ type ShareFilePopupProps = {
 export default function ShareFilePopup({ open, onClose }: ShareFilePopupProps) {
 
     const inputRef = useRef<HTMLInputElement>(null)
-    const [username, setUsername] = useState("");
+    const [userSearch, setUserSearch] = useState("");
     const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
+    const [userSuggestionList, setUserSuggestionList] = useState<any[]>([])
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            searchUserSuggestion();
+        }, 500);
+
+        return () => clearTimeout(timeout);
+    }, [userSearch])
+
+    const searchUserSuggestion = async () => {
+        if(!userSearch) return;
+        try {
+            const res = await getUserSuggestion(userSearch);
+            if(res.status === 'ok') {
+                setUserSuggestionList(res.users)
+            }
+        }catch(err) {
+            console.log(err)
+        }
+    }
 
     return (
         <Overlay open={open} onClose={onClose}>
@@ -31,17 +53,36 @@ export default function ShareFilePopup({ open, onClose }: ShareFilePopupProps) {
                     </button>
                 </div>
                 <div className="input-container-popup row">
-                    <div className="column">
+                    <div className="column input-user-search">
                         <input
                             ref={inputRef}
                             type="text"
                             id="username"
                             placeholder="เพิ่มผู้คน ชื่อผู้ใช้ อีเมล หรือรหัสเครื่อง"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            disabled={loading}
+                            value={userSearch}
+                            onChange={(e) => setUserSearch(e.target.value)}
                             style={{ width: "300px" }}
+                            autoComplete="off"
                         />
+                        {
+                            userSearch && (
+                                <div className="suggestion-list">
+                                    {
+                                        userSuggestionList.map((user, index) => (
+                                            <div className="suggestion-item active" key={index}>
+                                                <div className="suggestion-avatar">
+                                                    <img src={imgTest} alt="User Avatar" />
+                                                </div>
+                                                <div className="suggestion-info">
+                                                    <div className="suggestion-fullname">{user.name}</div>
+                                                    <span className="tag">{user.username}</span>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            )
+                        }
                         {error && <p className="error-message">{error}</p>}
                     </div>
                     <select>
@@ -117,9 +158,8 @@ export default function ShareFilePopup({ open, onClose }: ShareFilePopupProps) {
                     </button>
                     <button
                         className="confirm"
-                        disabled={loading}
                     >
-                        {loading ? "กำลังสร้าง..." : "ตกลง"}
+                        {"ตกลง"}
                     </button>
                 </div>
             </div>

@@ -172,3 +172,13 @@ export async function favorite(id: string) {
         return null;
     }
 }
+
+export async function getUserSuggestion(q: string) {
+    try {
+        const res = await api.get(`/users?query=${q}`);
+        return res.data;
+    } catch(err) {
+        console.log(err);
+        return null;
+    }
+}
