@@ -32,20 +32,20 @@ export default function ShareFilePopup({ open, onClose }: ShareFilePopupProps) {
     }, [userSearch])
 
     const searchUserSuggestion = async () => {
-        if(!userSearch) return;
+        if (!userSearch) return;
         try {
             const res = await getUserSuggestion(userSearch);
-            if(res.status === 'ok') {
+            if (res.status === 'ok') {
                 setUserSuggestionList(res.users)
             }
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
 
     return (
         <Overlay open={open} onClose={onClose}>
-            <div className="overlay-card">
+            <div className="overlay-card share-file-card">
                 <div className="overlay-card-header">
                     <h3>แชร์ไฟล์</h3>
                     <button onClick={onClose} className="popup-close-btn">
@@ -61,7 +61,6 @@ export default function ShareFilePopup({ open, onClose }: ShareFilePopupProps) {
                             placeholder="เพิ่มผู้คน ชื่อผู้ใช้ อีเมล หรือรหัสเครื่อง"
                             value={userSearch}
                             onChange={(e) => setUserSearch(e.target.value)}
-                            style={{ width: "300px" }}
                             autoComplete="off"
                         />
                         {
@@ -69,7 +68,7 @@ export default function ShareFilePopup({ open, onClose }: ShareFilePopupProps) {
                                 <div className="suggestion-list">
                                     {
                                         userSuggestionList.map((user, index) => (
-                                            <div className="suggestion-item active" key={index}>
+                                            <div className={`suggestion-item ${index === 0 && 'active'}`} key={index}>
                                                 <div className="suggestion-avatar">
                                                     <img src={imgTest} alt="User Avatar" />
                                                 </div>
@@ -83,12 +82,18 @@ export default function ShareFilePopup({ open, onClose }: ShareFilePopupProps) {
                                 </div>
                             )
                         }
-                        {error && <p className="error-message">{error}</p>}
                     </div>
                     <select>
                         <option value="read">อ่านอย่างเดียว</option>
                         <option value="edit">แก้ไขได้</option>
                     </select>
+                </div>
+                {/* {error && <p className="error-message">{error}</p>} */}
+                <div className="suggestion-selected-list">
+                    <span className="suggestion-selected-item">Roseedee Cehlaeh <img src={closeIcon} alt="" /></span>
+                    <span className="suggestion-selected-item">Muhammad <img src={closeIcon} alt="" /></span>
+                    <span className="suggestion-selected-item">Cehlaeh <img src={closeIcon} alt="" /></span>
+                    <span className="suggestion-selected-item">Kasturee Cehlaeh <img src={closeIcon} alt="" /></span>
                 </div>
                 <h5>บุคคลที่มีสิทธิ์การเข้าถึง</h5>
                 <div className="allowed-user-list">
@@ -110,6 +115,176 @@ export default function ShareFilePopup({ open, onClose }: ShareFilePopupProps) {
                         </div>
                         <div className="user-info">
                             <div className="user-fullname">Roseedee Chelaeh{"(Dee)"}</div>
+                            <span className="tag">4wer5tg1w6er...</span>
+                        </div>
+                        <div className="permission-tag">
+                            <select>
+                                <option value="">ผู้มีสิทธิ์อ่าน</option>
+                                <option value="">เอดิเตอร์</option>
+                                <option value="">ยกเลิกสิทธิ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="allowed-user-item">
+                        <div className="user-avatar">
+                            <img src={imgTest} alt="User Avatar" />
+                        </div>
+                        <div className="user-info">
+                            <div className="user-fullname">Muhamasdfasdfawsd
+                                ;flkaw';elrfjk'w;lekjfmad Chelaeh{"(Mad)"}</div>
+                            <span className="tag">4wer5tg1w6er...</span>
+                        </div>
+                        <div className="permission-tag">
+                            <select>
+                                <option value="">ผู้มีสิทธิ์อ่าน</option>
+                                <option value="">เอดิเตอร์</option>
+                                <option value="">ยกเลิกสิทธิ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="allowed-user-item">
+                        <div className="user-avatar">
+                            <img src={imgTest} alt="User Avatar" />
+                        </div>
+                        <div className="user-info">
+                            <div className="user-fullname">Muhamasdfasdfawsd
+                                ;flkaw';elrfjk'w;lekjfmad Chelaeh{"(Mad)"}</div>
+                            <span className="tag">4wer5tg1w6er...</span>
+                        </div>
+                        <div className="permission-tag">
+                            <select>
+                                <option value="">ผู้มีสิทธิ์อ่าน</option>
+                                <option value="">เอดิเตอร์</option>
+                                <option value="">ยกเลิกสิทธิ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="allowed-user-item">
+                        <div className="user-avatar">
+                            <img src={imgTest} alt="User Avatar" />
+                        </div>
+                        <div className="user-info">
+                            <div className="user-fullname">Muhamasdfasdfawsd
+                                ;flkaw';elrfjk'w;lekjfmad Chelaeh{"(Mad)"}</div>
+                            <span className="tag">4wer5tg1w6er...</span>
+                        </div>
+                        <div className="permission-tag">
+                            <select>
+                                <option value="">ผู้มีสิทธิ์อ่าน</option>
+                                <option value="">เอดิเตอร์</option>
+                                <option value="">ยกเลิกสิทธิ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="allowed-user-item">
+                        <div className="user-avatar">
+                            <img src={imgTest} alt="User Avatar" />
+                        </div>
+                        <div className="user-info">
+                            <div className="user-fullname">Muhamasdfasdfawsd
+                                ;flkaw';elrfjk'w;lekjfmad Chelaeh{"(Mad)"}</div>
+                            <span className="tag">4wer5tg1w6er...</span>
+                        </div>
+                        <div className="permission-tag">
+                            <select>
+                                <option value="">ผู้มีสิทธิ์อ่าน</option>
+                                <option value="">เอดิเตอร์</option>
+                                <option value="">ยกเลิกสิทธิ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="allowed-user-item">
+                        <div className="user-avatar">
+                            <img src={imgTest} alt="User Avatar" />
+                        </div>
+                        <div className="user-info">
+                            <div className="user-fullname">Muhamasdfasdfawsd
+                                ;flkaw';elrfjk'w;lekjfmad Chelaeh{"(Mad)"}</div>
+                            <span className="tag">4wer5tg1w6er...</span>
+                        </div>
+                        <div className="permission-tag">
+                            <select>
+                                <option value="">ผู้มีสิทธิ์อ่าน</option>
+                                <option value="">เอดิเตอร์</option>
+                                <option value="">ยกเลิกสิทธิ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="allowed-user-item">
+                        <div className="user-avatar">
+                            <img src={imgTest} alt="User Avatar" />
+                        </div>
+                        <div className="user-info">
+                            <div className="user-fullname">Muhamasdfasdfawsd
+                                ;flkaw';elrfjk'w;lekjfmad Chelaeh{"(Mad)"}</div>
+                            <span className="tag">4wer5tg1w6er...</span>
+                        </div>
+                        <div className="permission-tag">
+                            <select>
+                                <option value="">ผู้มีสิทธิ์อ่าน</option>
+                                <option value="">เอดิเตอร์</option>
+                                <option value="">ยกเลิกสิทธิ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="allowed-user-item">
+                        <div className="user-avatar">
+                            <img src={imgTest} alt="User Avatar" />
+                        </div>
+                        <div className="user-info">
+                            <div className="user-fullname">Muhamasdfasdfawsd
+                                ;flkaw';elrfjk'w;lekjfmad Chelaeh{"(Mad)"}</div>
+                            <span className="tag">4wer5tg1w6er...</span>
+                        </div>
+                        <div className="permission-tag">
+                            <select>
+                                <option value="">ผู้มีสิทธิ์อ่าน</option>
+                                <option value="">เอดิเตอร์</option>
+                                <option value="">ยกเลิกสิทธิ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="allowed-user-item">
+                        <div className="user-avatar">
+                            <img src={imgTest} alt="User Avatar" />
+                        </div>
+                        <div className="user-info">
+                            <div className="user-fullname">Muhamasdfasdfawsd
+                                ;flkaw';elrfjk'w;lekjfmad Chelaeh{"(Mad)"}</div>
+                            <span className="tag">4wer5tg1w6er...</span>
+                        </div>
+                        <div className="permission-tag">
+                            <select>
+                                <option value="">ผู้มีสิทธิ์อ่าน</option>
+                                <option value="">เอดิเตอร์</option>
+                                <option value="">ยกเลิกสิทธิ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="allowed-user-item">
+                        <div className="user-avatar">
+                            <img src={imgTest} alt="User Avatar" />
+                        </div>
+                        <div className="user-info">
+                            <div className="user-fullname">Muhamasdfasdfawsd
+                                ;flkaw';elrfjk'w;lekjfmad Chelaeh{"(Mad)"}</div>
+                            <span className="tag">4wer5tg1w6er...</span>
+                        </div>
+                        <div className="permission-tag">
+                            <select>
+                                <option value="">ผู้มีสิทธิ์อ่าน</option>
+                                <option value="">เอดิเตอร์</option>
+                                <option value="">ยกเลิกสิทธิ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="allowed-user-item">
+                        <div className="user-avatar">
+                            <img src={imgTest} alt="User Avatar" />
+                        </div>
+                        <div className="user-info">
+                            <div className="user-fullname">Muhamasdfasdfawsd
+                                ;flkaw';elrfjk'w;lekjfmad Chelaeh{"(Mad)"}</div>
                             <span className="tag">4wer5tg1w6er...</span>
                         </div>
                         <div className="permission-tag">
