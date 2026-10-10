@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 import { useAuthStore } from "@/modules/auth/store/auth.store";
+import "@/modules/auth/styles/authPages.css";
 
 export default function AuthLayout() {
 
@@ -15,6 +16,10 @@ export default function AuthLayout() {
     return <Navigate to="/" replace />;
   }
 
-  return <Outlet />;
+  return (
+    <main className="auth-page">
+      <Outlet />
+    </main>
+  );
 
 }

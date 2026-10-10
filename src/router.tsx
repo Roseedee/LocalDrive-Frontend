@@ -5,20 +5,16 @@ import AuthLayout from "./shared/layout/AuthLayout";
 
 import ProtectedLayout from "./modules/auth/components/ProtectedLayout";
 
-import InitPage from "./modules/auth/pages/InitPage";
 import LogoutPage from "./modules/auth/pages/LogoutPage";
 
+import { authRoutes } from "./modules/auth/routes";
 import { filesRoutes } from "./modules/files/routes";
 
 export const router = createBrowserRouter([
   {
-    path: "/init",
     element: <AuthLayout />,
     children: [
-      {
-        index: true,
-        element: <InitPage />
-      }
+      ...authRoutes
     ]
   },
 
