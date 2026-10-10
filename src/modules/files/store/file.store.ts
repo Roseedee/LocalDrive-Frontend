@@ -5,9 +5,11 @@ import type { FileModel, FolderModel, ItemProps } from '../models/file.model'
 
 interface FileState {
   // Upload
+  showFileUpload: boolean
   filesUpload: FileUploadModel[]
   filesUploadSuccess: ItemProps[]
 
+  setShowFileUpload: (state: boolean) => void
   setFilesUpload: (files: FileUploadModel[]) => void
   addFileUpload: (file: FileUploadModel) => void
   addManyFileUpload: (files: FileUploadModel[]) => void
@@ -54,8 +56,10 @@ interface FileState {
 
 export const useFileStore = create<FileState>((set) => ({
   // Upload
+  showFileUpload: false,
   filesUpload: [],
   filesUploadSuccess: [],
+  setShowFileUpload: (state) => set({ showFileUpload: state }),
   setFilesUpload: (files) => set({ filesUpload: files }),
   setFilesUploadSuccess: (files) => set({ filesUploadSuccess: files }),
 

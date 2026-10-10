@@ -9,18 +9,20 @@ import FileInfo from "./FileInfo";
 import FileUpload from "./FileUpload";
 
 export default function FileSidebar() {
+  const showFileUpload = useFileStore((s) => s.showFileUpload);
   const filesUpload = useFileStore((s) => s.filesUpload);
   const showFileInfo = useToolsStore((s) => s.showFileInfo);
 
   const [activeTab, setActiveTab] = useState<'info' | 'upload'>('info')
 
-  const hasUpload = filesUpload.length > 0;
+  const hasUpload = filesUpload.length > 0 || showFileUpload;
   const isForceInfo = showFileInfo && !hasUpload;
   const isTabMode = showFileInfo && hasUpload;
   const isUploadOnly = !showFileInfo && hasUpload;
 
   return (
-    <div className="right-sidebar-container">
+    
+    <div className={`right-sidebar-container`}>
       {isTabMode && (
         <div className="right-sidebar-tab">
           <div className={`right-sidebar-tab-item ${activeTab === "info" && "active"}`} onClick={() => setActiveTab("info")}>

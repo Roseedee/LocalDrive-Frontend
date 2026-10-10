@@ -60,7 +60,7 @@
 
 .action-btn:disabled {
   cursor: default;
-  background-color: rgb(243, 243, 243);
+  background-color: var(--color-bg);
 
   img {
     opacity: 0.4;

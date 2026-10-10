@@ -19,7 +19,7 @@ export default function ShareFilePopup({ open, onClose }: ShareFilePopupProps) {
 
     const inputRef = useRef<HTMLInputElement>(null)
     const [userSearch, setUserSearch] = useState("");
-    const [error, setError] = useState<string | null>(null);
+    // const [error, setError] = useState<string | null>(null);
     // const [loading, setLoading] = useState(false);
     const [userSuggestionList, setUserSuggestionList] = useState<any[]>([])
 

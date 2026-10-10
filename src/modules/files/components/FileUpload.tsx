@@ -22,7 +22,10 @@ import rarIcon from "@/assets/icons-file/rar.png"
 import unknownIcon from "@/assets/icons-file/unknown.png"
 
 import cancelIcon from '@/assets/icons/close.png';
+// import arrowIcon from '@/assets/icons/arrow.png'
+
 import type { FileUploadModel } from '../models/itemUpload.model';
+import FileUploadGroup from './FileUploadGroup';
 
 
 export default function FileUpload() {
@@ -185,6 +188,7 @@ export default function FileUpload() {
                 <span className='file-upload-text-btn-clear' onClick={() => setFilesUpload([])}>ล้างรายการทั้งหมด</span>
             </div>
             <div className="file-upload-list">
+                <FileUploadGroup items={filesUpload} />
                 {filesUpload.map((file) => (
                     <div key={file.id} className="file-upload-item">
                         <div className="file-upload-thumb">

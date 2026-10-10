@@ -19,6 +19,7 @@ export default function FilesPage() {
   const navigate = useNavigate();
 
   const filesUpload = useFileStore((s) => s.filesUpload);
+  const showFileUpload = useFileStore((s) => s.showFileUpload)
   const isGridView = useToolsStore((s) => s.isGridView);
   const showFileInfo = useToolsStore((s) => s.showFileInfo);
   const openFullView = useFileStore((s) => s.openFullView);
@@ -246,7 +247,7 @@ export default function FilesPage() {
         )
       }
       {
-        (showFileInfo || filesUpload.length > 0) && (
+        (showFileInfo || filesUpload.length > 0 || showFileUpload) && (
           <FileSidebar />
         )
       }
