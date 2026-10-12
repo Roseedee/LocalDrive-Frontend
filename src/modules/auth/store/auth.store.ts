@@ -1,16 +1,23 @@
 import { create } from 'zustand';
 
-type SessionData = {
-  user: {
+interface UserSessionData {
     id: string;
-  };
-  device: {
     name: string;
-  };
+}
+
+interface DeviceSessionData {
+    name: string;
+}
+
+type SessionData = {
+  user: UserSessionData;
+  device: DeviceSessionData;
 };
 
 interface AuthState {
     user_id: string | null;
+    user_name: string | null;
+
     device_name: string | null;
     loading: boolean;
     isSessionExpired: boolean;
@@ -22,12 +29,14 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
     user_id: null,
+    user_name: null,
     device_name: null,
     loading: true,
     isSessionExpired: false,
 
     setSession: (data) => set({
         user_id: data.user.id,
+        user_name: data.user.name,
         device_name: data.device.name,
         loading: false,
         isSessionExpired: false,
@@ -42,6 +51,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
     expireSession: () => set({
         user_id: null,
+        user_name: null,
         device_name: null,
         loading: false,
         isSessionExpired: true,

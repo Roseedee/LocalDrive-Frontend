@@ -16,13 +16,22 @@ api.interceptors.request.use((config) => {
   const { isSessionExpired } =
     useAuthStore.getState();
 
+  const isPublicAuthRequest =
+    config.url?.includes("/auth/login") ||
+    config.url?.includes("/auth/init");
+
   // block request ถ้า session หมดแล้ว
-  if (isSessionExpired) {
+  // แต่ยังอนุญาต login / init
+  if (
+    isSessionExpired &&
+    !isPublicAuthRequest
+  ) {
     return Promise.reject(
       new Error("Session expired")
     );
   }
 
+  // logic accessToken เดิม ไม่แก้
   const token =
     localStorage.getItem("accessToken");
 
@@ -32,7 +41,6 @@ api.interceptors.request.use((config) => {
   }
 
   return config;
-
 });
 
 // =========================
@@ -81,15 +89,16 @@ export const logout = async () => {
 // =========================
 
 api.interceptors.response.use(
-
   (res) => res,
 
   async (err) => {
 
     const original = err.config;
 
-    // network error
-    // backend offline
+    // =========================
+    // NETWORK ERROR
+    // =========================
+
     if (!err.response) {
 
       console.error(
@@ -103,6 +112,19 @@ api.interceptors.response.use(
     const status = err.response.status;
 
     if (!original) {
+      return Promise.reject(err);
+    }
+
+    // =========================
+    // PUBLIC AUTH ENDPOINT
+    // ห้ามเข้า refresh flow
+    // =========================
+
+    const isPublicAuthRequest =
+      original.url?.includes("/auth/login") ||
+      original.url?.includes("/auth/init");
+
+    if (isPublicAuthRequest) {
       return Promise.reject(err);
     }
 
@@ -123,7 +145,6 @@ api.interceptors.response.use(
         .expireSession();
 
       return Promise.reject(err);
-
     }
 
     // =========================
@@ -137,7 +158,10 @@ api.interceptors.response.use(
 
       original._retry = true;
 
-      // รอ refresh ตัวเดียว
+      // =========================
+      // WAIT FOR CURRENT REFRESH
+      // =========================
+
       if (isRefreshing) {
 
         return new Promise((resolve) => {
@@ -169,17 +193,25 @@ api.interceptors.response.use(
 
         const data = res.data;
 
-        localStorage.setItem(
-          "accessToken",
+        // =========================
+        // SAVE NEW ACCESS TOKEN
+        // =========================
+
+        localStorage.setItem("accessToken", data.accessToken);
+
+        localStorage.setItem("device_uuid", data.device.uuid);
+
+        // =========================
+        // RELEASE WAITING REQUESTS
+        // =========================
+
+        processQueue(
           data.accessToken
         );
 
-        localStorage.setItem(
-          "device_uuid",
-          data.device.uuid
-        );
-
-        processQueue(data.accessToken);
+        // =========================
+        // RETRY ORIGINAL REQUEST
+        // =========================
 
         original.headers.Authorization =
           `Bearer ${data.accessToken}`;
@@ -187,6 +219,10 @@ api.interceptors.response.use(
         return api(original);
 
       } catch (refreshError) {
+
+        // =========================
+        // REFRESH FAILED
+        // =========================
 
         localStorage.removeItem(
           "accessToken"
@@ -207,7 +243,6 @@ api.interceptors.response.use(
         isRefreshing = false;
 
       }
-
     }
 
     // =========================
@@ -216,22 +251,13 @@ api.interceptors.response.use(
 
     if (status === 403) {
 
-      localStorage.removeItem(
-        "accessToken"
-      );
+      localStorage.removeItem("accessToken");
 
-      localStorage.removeItem(
-        "device_uuid"
-      );
+      localStorage.removeItem("device_uuid");
 
-      useAuthStore
-        .getState()
-        .expireSession();
-
+      useAuthStore.getState().expireSession();
     }
 
     return Promise.reject(err);
-
   }
-
 );
