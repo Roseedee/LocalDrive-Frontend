@@ -1,5 +1,15 @@
 import axios from "axios";
 
+declare module "axios" {
+    export interface AxiosRequestConfig {
+        skipAuthRefresh?: boolean;
+    }
+
+    export interface InternalAxiosRequestConfig {
+        skipAuthRefresh?: boolean;
+    }
+}
+
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 
 export const api = axios.create({
@@ -13,31 +23,32 @@ export const api = axios.create({
 
 api.interceptors.request.use((config) => {
 
-  const { isSessionExpired } =
-    useAuthStore.getState();
+  const { isSessionExpired } = useAuthStore.getState();
 
   const isPublicAuthRequest =
     config.url?.includes("/auth/login") ||
     config.url?.includes("/auth/init");
 
   // block request ถ้า session หมดแล้ว
-  // แต่ยังอนุญาต login / init
+  // แต่ยังอนุญาต login / init / skipAuthRefress
   if (
     isSessionExpired &&
-    !isPublicAuthRequest
+    !isPublicAuthRequest &&
+    !config.skipAuthRefresh
   ) {
     return Promise.reject(
       new Error("Session expired")
     );
   }
 
-  // logic accessToken เดิม ไม่แก้
-  const token =
-    localStorage.getItem("accessToken");
+  if(config.skipAuthRefresh) {
+    return config;
+  }
+
+  const token = localStorage.getItem("accessToken");
 
   if (token && config.headers) {
-    config.headers.Authorization =
-      `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;
@@ -49,16 +60,10 @@ api.interceptors.request.use((config) => {
 
 let isRefreshing = false;
 
-let pendingRequests: Array<
-  (token: string) => void
-> = [];
+let pendingRequests: Array<(token: string) => void> = [];
 
 const processQueue = (token: string) => {
-
-  pendingRequests.forEach((callback) => {
-    callback(token);
-  });
-
+  pendingRequests.forEach((callback) => { callback(token); });
   pendingRequests = [];
 
 };
@@ -70,18 +75,13 @@ const processQueue = (token: string) => {
 export const logout = async () => {
 
   try {
-
     await api.post("/auth/logout");
-
   } catch { }
 
   localStorage.removeItem("accessToken");
   localStorage.removeItem("device_uuid");
 
-  useAuthStore
-    .getState()
-    .expireSession();
-
+  useAuthStore.getState().expireSession();
 };
 
 // =========================
@@ -101,17 +101,18 @@ api.interceptors.response.use(
 
     if (!err.response) {
 
-      console.error(
-        "Network error or backend offline"
-      );
+      console.error("Network error or backend offline");
 
       return Promise.reject(err);
-
     }
 
     const status = err.response.status;
 
     if (!original) {
+      return Promise.reject(err);
+    }
+
+    if(original.skipAuthRefresh) {
       return Promise.reject(err);
     }
 

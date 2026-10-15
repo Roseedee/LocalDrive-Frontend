@@ -1,5 +1,7 @@
 import { api } from '@/shared/lib/axios';
 
+let selectionToken: string | null = null;
+
 export async function getCurrentUser() {
     try {
         const res = await api.get('/auth/me');
@@ -23,6 +25,7 @@ export async function register(deviceName: string) {
 export async function login(username: string, password: string) {
     try {
         const res = await api.post('/auth/login', {username, password})
+        selectionToken = res.data.selectionToken;
         return res.data;
     } catch (err) {
         console.error("Error Login : ", err)
@@ -30,9 +33,17 @@ export async function login(username: string, password: string) {
     }
 }
 
-export async function findReplaceableDevice() {
+export async function findDevice() {
     try {
-        const res = await api.get("/auth/find_replaceable_device")
+        if(!selectionToken) {
+            throw new Error("Device selection session expired");
+        }
+        const res = await api.get("/auth/find_replaceable_devices", {
+            headers: {
+                Authorization: `Bearer ${selectionToken}`
+            },
+            skipAuthRefresh: true,
+        });
         return res.data
     }catch (err) {
         console.error("Error get replaceable device list: ", err)

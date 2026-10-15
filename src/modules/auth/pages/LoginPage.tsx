@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth.api"
-import { useAuthStore } from "../store/auth.store";
 
 export default function LoginPage() {
   const navigate = useNavigate()
-
-  const setSession = useAuthStore(s => s.setSession)
 
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -27,18 +24,10 @@ export default function LoginPage() {
 
     try {
       setLoading(true);
-
-      const res = await login(username, password)
-      console.log(res);
-
-
-      // เก็บ token
-      // localStorage.setItem("accessToken", result.data.accessToken);
-
-      setSession(res);
-
+      await login(username, password)
       navigate("/compare-device");
     } catch (err) {
+      console.log(err)
       if (err instanceof Error) {
         setError("ชื่อผู้ใช้และรหัสผ่านไม่ถูกต้อง");
       } else {

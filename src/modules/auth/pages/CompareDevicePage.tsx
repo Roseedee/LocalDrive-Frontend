@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {  useNavigate } from "react-router-dom";
+import { findDevice } from "../api/auth.api";
 
 import computerIcon from "@/assets/icons/computer.png";
 
@@ -13,8 +14,19 @@ const deviceTypes = [
 
 export default function CompareDevicePage() {
   const navigate = useNavigate();
+
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
   const [isCreatingDevice, setIsCreatingDevice] = useState(false);
+
+  useEffect(() => {
+    const fetchDevice = async () => {
+      const res = await findDevice();
+      console.log(res);
+    }
+
+    fetchDevice();
+
+  }, [])
 
   const handleCreateDevice = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -84,7 +96,6 @@ export default function CompareDevicePage() {
             </select>
 
             <input type="text" placeholder="ตั้งชื่ออุปกรณ์" />
-            <input type="text" placeholder="ชื่อ-นามสกุล" defaultValue="Roseedee Cehlaeh" />
 
             <button type="submit" className="auth-primary-btn">
               ตกลง
